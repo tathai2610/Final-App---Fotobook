@@ -1,0 +1,153 @@
+body {
+    font-family: 'Roboto';
+}
+label.error {
+            color: red;
+
+        }
+.login-box {
+    border: 2px solid #E0E0E0;
+    border-radius: 12px;
+}
+#user-slash {
+    height: 95px;
+    width: 95px;
+}
+.page {
+    background-color: #f8f8f8;
+}
+.avatar {
+    background-color: #3C5999;
+    color: white;
+    border-color: #3C5999;
+}
+.box-shadow {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px 0px 0px 3px;
+}
+.font-size {
+    font-size: 14px;
+}
+.font-size-sm {
+    font-size: 10px;
+}
+.text-color, .blue-heart, .nav-link.btn.btn-light.font-weight-bold.rounded-circle.text-color {
+    color: #3C5999;
+}
+.text-gray {
+  color: #828282;
+}
+.grey-heart{
+    color :grey;
+}
+.btn-edit {
+    color: #3C5999;
+    border-color: #3C5999;
+    border-width:2px;
+    font-weight: 700;
+    padding: 3px 5px;
+}
+
+.btn-add-photo{
+    font-weight: 700;
+    padding: 3px 5px;
+}
+.btn-edit-photo {
+    font-weight: 700;
+    padding: 3px 5px;
+    color: white;
+    background-color: black;
+    position: absolute;
+    bottom:0;
+    right:0;
+}
+
+.followed{
+  color: white;
+  background: linear-gradient(238.39deg, #EB6057 27.49%, #F2994A 69.05%);
+  font-weight: 800;
+  padding: 1px 5px;
+}
+.follow {
+  color:  tomato;
+  background-color: white;
+  border-color: tomato;
+  border-width: 2px;
+  font-weight: 600;
+  padding: 3px 5px;
+}
+.uploader-hold {
+    width: 215px;
+    height: 215px;
+    background: #F2F2F2;
+    border: 2px dashed #BDBDBD;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+.upload-photo {
+    width: 215px;
+    height: 215px;
+
+}
+.plus-icon {
+  opacity :0.6;
+}
+.edit-header{
+    opacity: 0.7;
+    width: 90%;
+}
+.overflow {
+    white-space: nowrap;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+.img-holder{
+    height: 250px;
+    width: 250px;
+    display: block;
+}
+.rotate10{
+    transform: rotate(10deg);
+    position: absolute;
+    height: 215px;
+    width: 215px;
+}
+.rotate5{
+    transform: rotate(5deg);
+    position: absolute;
+    height: 215px;
+    width: 215px;
+}
+.norotate{
+    height: 215px;
+    width: 215px;
+}
+.photo-profile-edit {
+    height: 200px;
+    width: 200px;
+}
+#btn-change {
+    bottom: 10px;
+    opacity: 0.7;
+}
+.col.bg-white.p-3 {
+    height:900px;
+}
+
+.font-tab-header {
+    font-size: 20px;
+}
+img.tab-follow {
+    width: 125px;
+    height: 125px;
+}
+
+.bg-white.position-absolute.rounded-circle {
+    top: 0;
+    right: 0;
+    height:30px;
+    width: 30px;
+    opacity: 0.8;
+}
