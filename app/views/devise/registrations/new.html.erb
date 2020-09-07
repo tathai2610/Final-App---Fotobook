@@ -1,29 +1,76 @@
-<h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <nav class="navbar navbar-expand-md navbar-dark avatar px-5">
+      <a class="navbar-brand font-weight-bold pl-lg-5" href="#">Fotobook</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline mt-2 my-lg-0 w-100 col-lg-5 ">
+              <input class="form-control my-lg-0 w-100" type="search" placeholder="Search Photo / Album" aria-label="Search">
+            </form>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+            <ul class="navbar-nav col-lg-auto offset-lg-6 text-center">
+              <li class="nav-item active ">
+                <%=link_to "Login", new_user_session_path, method: 'get', class:"nav-link" %>
+              </li>
+            </ul>
+      </div>
+    </nav>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    <div class="h1 text-color font-weight-bold text-center mt-5">Fotobook Signup</div>
+      <div class="container-fluid">
+        <div class="row justify-content-center my-2">
+            <div class="col-auto col-lg-2 login-box text-center">
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
+              <%= image_tag "icons8-google-60.png", class: "img-fluid rounded-circle mx-lg-2 my-1" %>
+              <%= image_tag "icons8-facebook-60.png", class: "img-fluid rounded-circle mx-lg-2 my-1" %>
+              <%= image_tag "icons8-twitter-circled-60.png", class: "img-fluid rounded-circle  mx-lg-2 my-1" %>
+
+            </div>
+        </div>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {:id => "signup-form"}) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <div class="row justify-content-center">
+            <div class="col-auto col-lg-3 page box-shadow rounded mt-1 pt-5">
+
+                <div class="row justify-content-center">
+                    <div class="col-11 field">
+                      <%= f.label :firstname, "First Name", class:"mb-0 font-weight-bold" %><br/>
+                      <%= f.text_field :firstname, class:"form-control pr-3 py-4 mb-2", placeholder:"First Name", autofocus: true %>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-11 field">
+                      <%= f.label :lastname, "Last Name", class:"mb-0 font-weight-bold" %><br/>
+                      <%= f.text_field :lastname, class:"form-control pr-3 py-4 mb-2", placeholder:"Last Name" %>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-11 field">
+                      <%= f.label :email, "Email", class:"mb-0 font-weight-bold" %><br/>
+                      <%= f.email_field :email, autocomplete: "email", placeholder:"Email", class:"form-control pr-3 py-4 mb-2 " %>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-11 field">
+                      <%= f.label :password, "New Password", class:"mb-0 font-weight-bold" %><br/>
+                      <%= f.password_field :password, autocomplete: "new-password", class:"form-control pr-3 py-4 mb-2 ", placeholder:"Password" %>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-11 field">
+                      <%= f.label :password_confirmation, "Password Confirmation", class:"mb-0 font-weight-bold" %><br />
+                      <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control pr-3 py-4 mb-2", placeholder:"Password" %>
+                    </div>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-auto actions">
+                      <%= f.submit "Signup", class:"btn avatar float-center px-4 font-weight-bold" %>
+                    </div>
+                </div>
+              </div>
+          </div>
+
 <% end %>
-
-<%= render "devise/shared/links" %>

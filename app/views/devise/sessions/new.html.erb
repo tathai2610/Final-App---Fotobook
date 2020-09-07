@@ -1,26 +1,75 @@
-<h2>Log in</h2>
+<%= stylesheet_link_tag "style" %>
+<%= javascript_pack_tag "script" %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+<script src="https://kit.fontawesome.com/3dc3c39fce.js" crossorigin="anonymous"></script>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+    <nav class="navbar navbar-expand-md navbar-dark avatar px-5">
+      <a class="navbar-brand font-weight-bold pl-lg-5" href="#">Fotobook</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline mt-2 my-lg-0 w-100 col-lg-5 ">
+              <input class="form-control my-lg-0 w-100" type="search" placeholder="Search Photo / Album" aria-label="Search">
+            </form>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
+            <ul class="navbar-nav col-lg-auto offset-lg-6 text-center">
+              <li class="nav-item active ">
+                <a class="nav-link" href="#">Login</a>
+              </li>
+            </ul>
+      </div>
+    </nav>
+
+    <div class="h1 text-color font-weight-bold text-center mt-5">Fotobook Login</div>
+      <div class="container-fluid">
+        <div class="row justify-content-center my-2">
+            <div class="col-auto col-lg-2 login-box text-center">
+
+          <%= image_tag "icons8-google-60.png", class: "img-fluid rounded-circle mx-lg-2 my-1" %>
+          <%= image_tag "icons8-facebook-60.png", class: "img-fluid rounded-circle mx-lg-2 my-1" %>
+          <%= image_tag "icons8-twitter-circled-60.png", class: "img-fluid rounded-circle  mx-lg-2 my-1" %>
+
+            </div>
+        </div>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {:id => "signin-form"}) do |f| %>
+          <div class="row justify-content-center">
+              <div class="col-auto col-lg-2 page box-shadow rounded mt-1">
+
+                  <div class="row justify-content-center my-5">
+                      <div class="col-auto">
+                        <%= image_tag "photo.png", class: "img-fluid rounded-circle", id:"user-slash" %>
+                      </div>
+                  </div>
+                  <div class="row justify-content-center">
+                      <div class="col-11 field">
+                          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"Email", class:"form-control pr-3 py-4" %>
+                          <%= f.password_field :password, autocomplete: "current-password", placeholder:"Password", class:"form-control pr-3 py-4" %>
+                      </div>
+                  </div>
+                  <div class="row justify-content-center my-3">
+                      <div class="col-auto actions">
+                        <%= f.submit "Login", class:"btn avatar float-center px-4 font-weight-bold" %>
+                      </div>
+                  </div>
+                  <div class="row justify-content-center mb-2">
+                      <div class="col-auto">
+                          <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                            <%= link_to "Forgot password?", new_password_path(resource_name), class:"text-color font-size text-decoration-none" %><br />
+                          <% end %>
+                      </div>
+                  </div>
+              </div>
+          </div>
+           <div class="row justify-content-center mt-4">
+              <div class="col-auto">
+                  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+                    <%= link_to "Create an account", new_registration_path(resource_name), class:"text-color font-size text-decoration-none" %><br />
+                  <% end %>
+              </div>
+          </div>
+      </div>
+
 <% end %>
-
-<%= render "devise/shared/links" %>
