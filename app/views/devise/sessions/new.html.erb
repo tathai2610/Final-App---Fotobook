@@ -1,8 +1,4 @@
-<%= stylesheet_link_tag "style" %>
-<%= javascript_pack_tag "script" %>
-
-<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-<script src="https://kit.fontawesome.com/3dc3c39fce.js" crossorigin="anonymous"></script>
+<%= stylesheet_link_tag 'style' %>
 
     <nav class="navbar navbar-expand-md navbar-dark avatar px-5">
       <a class="navbar-brand font-weight-bold pl-lg-5" href="#">Fotobook</a>
@@ -53,6 +49,10 @@
                       <div class="col-auto actions">
                         <%= f.submit "Login", class:"btn avatar float-center px-4 font-weight-bold" %>
                       </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <p class="notice"><%= notice %></p>
+                    <p class="alert"><%= alert %></p>
                   </div>
                   <div class="row justify-content-center mb-2">
                       <div class="col-auto">

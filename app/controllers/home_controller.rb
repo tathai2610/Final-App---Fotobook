@@ -17,5 +17,10 @@ class HomeController < ApplicationController
   def discover_album
     @albums = Album.where(shared:true).order(created_at: :desc)
   end
-  
+
+  def guest_feed
+    @photos = Photo.where(shared:true).order(created_at: :desc)
+    @albums = Album.where(shared:true).order(created_at: :desc)
+  end
+
 end
