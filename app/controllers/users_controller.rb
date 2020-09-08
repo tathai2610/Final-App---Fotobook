@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
       respond_to do |format|
           if @user.save
-            MailerJob.perform_later @user
+            MailerJob.perform_now @user
             format.html { redirect_to @user, notice: 'User was successfully created.' }
             format.json { render :show, status: :created, location: @user }
           else
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
     private
       def user_detail
-        params.require(:user).permit(:firstname, :lastname, :email)
+        params.require(:user).permit(:firstname, :lastname, :email, :password, :password_confirmation)
       end
 
 end
