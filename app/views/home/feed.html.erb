@@ -10,9 +10,15 @@
           <input class="form-control my-lg-0 w-100" type="search" placeholder="Search Photo / Album" aria-label="Search">
         </form>
 
-        <ul class="navbar-nav col-lg-auto offset-lg-6 text-center">
-          <li class="nav-item active ">
-            <%=link_to "Login", new_user_session_path, method: 'get', class:"nav-link" %>
+        <ul class="navbar-nav col-lg-auto text-center offset-lg-4">
+          <li class="nav-item active d-none d-lg-block">
+            <button type="button" class="nav-link btn btn-light font-weight-bold rounded-circle text-color"><%= "#{current_user.lastname[0]}#{current_user.firstname[0]}"%></button>
+          </li>
+          <li class="nav-item active mr-lg-5">
+            <a class="nav-link" href="#"><%= "#{current_user.lastname} #{current_user.firstname}" %></a>
+          </li>
+          <li class="nav-item active ml-lg-5">
+            <%=link_to "Logout", destroy_user_session_path, method: 'delete', class:"nav-link" %>
           </li>
         </ul>
   </div>
@@ -22,7 +28,7 @@
         <div class="row page h-100">
           <div class="col-lg-2 pt-4 justify-content-center ">
             <div class="col-lg-8 ml-5">
-              <span class="text-color font-weight-bold" href="#">Feeds</span>
+              <a class="text-color font-weight-bold" href="#">Feeds</a>
             </div>
             <div class="col-lg-8 ml-5">
               <span class="text-secondary font-weight-bold"><%= link_to "Discover", discover_photo_url%></span>
