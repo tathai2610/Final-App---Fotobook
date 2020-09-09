@@ -10,15 +10,9 @@
           <input class="form-control my-lg-0 w-100" type="search" placeholder="Search Photo / Album" aria-label="Search">
         </form>
 
-        <ul class="navbar-nav col-lg-auto text-center offset-lg-4 offset-md-4">
-          <li class="nav-item active d-none d-lg-block">
-            <button type="button" class="nav-link btn btn-light font-weight-bold rounded-circle text-color"><%= "#{current_user.lastname[0]}#{current_user.firstname[0]}"%></button>
-          </li>
-          <li class="nav-item active mr-lg-5">
-            <a class="nav-link" href="#"><%= "#{current_user.lastname} #{current_user.firstname}" %></a>
-          </li>
-          <li class="nav-item active ml-lg-5">
-            <%=link_to "Logout", destroy_user_session_path, method: 'delete', class:"nav-link" %>
+        <ul class="navbar-nav col-lg-auto offset-lg-6 offset-md-6 text-center">
+          <li class="nav-item active ">
+            <%=link_to "Login", new_user_session_path, method: 'get', class:"nav-link" %>
           </li>
         </ul>
   </div>
@@ -29,37 +23,33 @@
           <div class="col-lg-2 pt-4 justify-content-center ">
             <ul class="nav flex-lg-column pl-lg-5 p-md-auto justify-content-center">
               <li class="nav-item">
-                <a class="nav-link text-gray font-weight-bold" href="<%=authenticated_root_path%>">Feeds</a>
+                <a class="nav-link text-color font-weight-bold" href="">Feeds</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-color font-weight-bold" href="">Discover</a>
+                <a class="nav-link text-gray font-weight-bold" href="<%=discover_photos_path%>">Discover</a>
               </li>
             </ul>
-
           </div>
             <div class="col-lg-8 p-3 h-100">
               <div class="col bg-white h-100">
                 <div class="row justify-content-center">
                   <div class="row m-3 btn-group">
                     <a href="" class="btn rounded-left avatar font-weight-bold" role="button" id="photo-tab"> PHOTO </a>
-                    <a href="<%=discover_albums_path%>" class="btn rounded-right text-color font-weight-bold" role="button" id="album-tab"> ALBUM </a>
+                    <a href="<%=guest_albums_path%>" class="btn rounded-right text-color font-weight-bold" role="button" id="album-tab"> ALBUM </a>
                   </div>
                 </div>
-
                     <div class="row">
                       <% if @photos %>
                        <% @photos.each do |photo| %>
                        <div class="col-lg-6 col-sm-12 col-md-6 p-3 d-lg-inline-flex" >
                         <div class="col-lg-6 col-sm-12 col-md-12 p-0 box-shadow">
-                         <img title="<%=photo.title%>" desc="<%=photo.description%>" src="<%=photo.image%>" style="width:100%;height:100%;cursor:pointer" data-toggle="modal" data-target="#modal-photo">
-                         <%= image_tag photo.image_url, title: photo.title, desc: photo.description, style:"width:100%;height:100%;cursor:pointer", data-toggle:"modal" data-target:"#modal-photo" %>
+                         <img title="<%=photo.title%>" desc="<%=photo.description%>" src="https://www.islandair.com/wp-content/uploads/2018/07/ellie-adams-247024-unsplash.jpg" style="width:100%;height:100%;cursor:pointer" data-toggle="modal" data-target="#modal-photo">
                         </div>
                         <div class="col-lg-6 p-2 col-sm-12 col-md-12 page d-block box-shadow">
                           <div class="container h-100">
                             <div class="d-flex align-items-center mb-2">
                               <img src="https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png" class="rounded-circle" style="width:30px;height:30px;" alt="" />
                               <span class="font-weight-bold text-color ml-2"><%= "#{photo.user.lastname} #{photo.user.firstname}" %></span>
-                              <button type="button" class="rounded-pill followed btn btm-sm font-size-sm p-1 ml-auto" name="follow">Following</button>
                             </div>
 
                             <span><b><%=photo.title%></b></span>
@@ -74,7 +64,6 @@
                       </div>
                       <% end %>
                     <% end %>
-
 
                 </div>
 

@@ -3,18 +3,20 @@ Rails.application.routes.draw do
   devise_for :users
   devise_scope :user do
     authenticated :user do
-      root 'home#feed', as: :authenticated_root
+      root 'home#feed_photo', as: :authenticated_root
     end
 
     unauthenticated do
-      root 'home#guest_feed', as: :unauthenticated_root
+      root 'home#guest_feed_photo', as: :unauthenticated_root
     end
   end
 
   resources :photos
   resources :albums
 
-  get 'discover/photo', to: 'home#discover_photo'
-  get 'discover/album', to: 'home#discover_album'
+  get 'guest-albums', to: 'home#guest_feed_album'
+  get 'feed-albums', to: 'home#feed_album'
+  get 'discover-photos', to: 'home#discover_photo'
+  get 'discover-albums', to: 'home#discover_album'
 
 end

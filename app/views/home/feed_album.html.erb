@@ -10,7 +10,7 @@
           <input class="form-control my-lg-0 w-100" type="search" placeholder="Search Photo / Album" aria-label="Search">
         </form>
 
-        <ul class="navbar-nav col-lg-auto text-center offset-lg-4">
+        <ul class="navbar-nav col-lg-auto text-center offset-lg-4 offset-md-4">
           <li class="nav-item active d-none d-lg-block">
             <button type="button" class="nav-link btn btn-light font-weight-bold rounded-circle text-color"><%= "#{current_user.lastname[0]}#{current_user.firstname[0]}"%></button>
           </li>
@@ -27,75 +27,40 @@
     <div class="container-fluid h-100">
         <div class="row page h-100">
           <div class="col-lg-2 pt-4 justify-content-center ">
-            <div class="col-lg-8 ml-5">
-              <a class="text-color font-weight-bold" href="#">Feeds</a>
-            </div>
-            <div class="col-lg-8 ml-5">
-              <span class="text-secondary font-weight-bold"><%= link_to "Discover", discover_photo_url%></span>
-            </div>
+            <ul class="nav flex-lg-column pl-lg-5 p-md-auto justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link text-color font-weight-bold" href="">Feeds</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-gray font-weight-bold" href="<%=discover_photos_path%>">Discover</a>
+              </li>
+            </ul>
           </div>
             <div class="col-lg-8 p-3 h-100">
               <div class="col bg-white h-100">
                 <div class="row justify-content-center">
-                  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link active font-weight-bold" id="pills-photo-tab" data-toggle="pill" href="#pills-photo" role="tab" aria-controls="pills-photo" aria-selected="true">PHOTO</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link font-weight-bold" id="pills-album-tab" data-toggle="pill" href="#pills-album" role="tab" aria-controls="pills-album" aria-selected="false">ALBUM</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="tab-content" id="pills-tabContent">
-                  <div class="tab-pane fade show active" id="pills-photo" role="tabpanel" aria-labelledby="pills-photo-tab">
-
-                    <div class="row">
-                      <% if @photos %>
-                       <% @photos.each do |photo| %>
-                       <div class="col-lg-6 col-sm-12 p-3 d-lg-inline-flex" >
-                        <div class="col-lg-6 col-sm-12 p-0 box-shadow">
-                         <img title="<%=photo.title%>" desc="<%=photo.description%>" src="https://www.islandair.com/wp-content/uploads/2018/07/ellie-adams-247024-unsplash.jpg" style="width:100%;height:100%;cursor:pointer" data-toggle="modal" data-target="#modal-photo">
-                        </div>
-                        <div class="col-lg-6 p-2 col-sm-12 page d-block box-shadow">
-                          <div class="container h-100">
-                            <div class="d-flex align-items-center mb-2">
-                              <img src="https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png" class="rounded-circle" style="width:30px;height:30px;" alt="" />
-                              <span class="font-weight-bold text-color ml-2"><%= "#{photo.user.lastname} #{photo.user.firstname}" %></span>
-                            </div>
-
-                            <span><b><%=photo.title%></b></span>
-                            <p class=" font-size"><%=photo.description%></p>
-                            <div>
-                              <span class="blue-heart"><i class="fas fa-heart"></i></span>
-                              <span><small><%= photo.likes.size %> </small></span>
-                              <span class="float-right"><small class="text-secondary "><%= photo.created_at.strftime("%I:%M %p %-d/%-m/%Y") %></small></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <% end %>
-                    <% end %>
-
-                    </div>
-
+                  <div class="row m-3 btn-group">
+                    <a href="<%=authenticated_root_path%>" class="btn rounded-left text-color font-weight-bold" role="button" id="photo-tab"> PHOTO </a>
+                    <a href="" class="btn rounded-right avatar font-weight-bold" role="button" id="album-tab"> ALBUM </a>
                   </div>
-                  <div class="tab-pane fade" id="pills-album" role="tabpanel" aria-labelledby="pills-album-tab">
+                </div>
 
                     <div class="row">
                       <% if @albums %>
                        <% @albums.each do |album| %>
-                       <div class="col-lg-6 col-sm-12 p-3 d-lg-inline-flex" >
-                        <div class="col-lg-6 col-sm-12 box-shadow position-relative p-4 text-center page border-right-0">
+                       <div class="col-lg-6 col-sm-12 col-md-6 p-3 d-lg-inline-flex" >
+                        <div class="col-lg-6 col-sm-12 col-md-12 box-shadow position-relative p-4 text-center page border-right-0">
                          <img src="https://www.islandair.com/wp-content/uploads/2018/07/ellie-adams-247024-unsplash.jpg" class="rotate5 " data-toggle="modal" data-target="#modal-album" title="<%=album.title%>" desc="<%=album.description%>">
                          <img src="https://www.islandair.com/wp-content/uploads/2018/07/ellie-adams-247024-unsplash.jpg" class="rotate10 " data-toggle="modal" data-target="#modal-album" title="<%=album.title%>" desc="<%=album.description%>">
                          <img src="https://www.islandair.com/wp-content/uploads/2018/07/ellie-adams-247024-unsplash.jpg" class="norotate" data-toggle="modal" data-target="#modal-album" title="<%=album.title%>" desc="<%=album.description%>">
 
                         </div>
-                        <div class="col-lg-6 p-2 col-sm-12 page d-block box-shadow position-relative border-left-0">
+                        <div class="col-lg-6 p-2 col-sm-12 col-md-12 page d-block box-shadow position-relative border-left-0">
                           <div class="container h-100">
                             <div class="d-flex align-items-center mb-2">
                               <img src="https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png" class="rounded-circle" style="width:30px;height:30px;" alt="" />
                               <span class="font-weight-bold text-color ml-2"><%= "#{album.user.lastname} #{album.user.firstname}" %></span>
+
                             </div>
 
                             <span><b><%=album.title%></b></span>
@@ -113,8 +78,6 @@
 
                     </div>
 
-                  </div>
-                </div>
 
               </div>
             </div>

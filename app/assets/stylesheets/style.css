@@ -2,12 +2,14 @@ body {
     font-family: 'Roboto';
 }
 label.error {
-            color: red;
-
-        }
+    color: red;
+}
 .login-box {
     border: 2px solid #E0E0E0;
     border-radius: 12px;
+}
+#album-tab, #photo-tab{
+  border: 2px solid #3C5999;
 }
 #user-slash {
     height: 95px;
@@ -142,12 +144,4 @@ label.error {
 img.tab-follow {
     width: 125px;
     height: 125px;
-}
-
-.bg-white.position-absolute.rounded-circle {
-    top: 0;
-    right: 0;
-    height:30px;
-    width: 30px;
-    opacity: 0.8;
 }
