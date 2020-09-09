@@ -7,6 +7,8 @@ class User < ApplicationRecord
     MailerJob.perform_now self
   end
 
+  mount_uploader :avatar, ImageUploader
+
   devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :validatable, :confirmable
 

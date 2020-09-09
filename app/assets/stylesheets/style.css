@@ -42,26 +42,48 @@ label.error {
 .grey-heart{
     color :grey;
 }
-.btn-edit {
+.btn-edit-profile {
     color: #3C5999;
     border-color: #3C5999;
-    border-width:2px;
-    font-weight: 700;
-    padding: 3px 5px;
+    border-width: 2px;
+    padding: 2px 3px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: bold;
+}
+.username {
+    font-size: 45px;
+    line-height: 53px;
+    font-weight: bold;
 }
 
 .btn-add-photo{
-    font-weight: 700;
-    padding: 3px 5px;
+    padding: 2px 3px;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    border-color: #219653;
+    border-width: 2px;
 }
 .btn-edit-photo {
-    font-weight: 700;
-    padding: 3px 5px;
+    font-weight: bold;
+    padding: 2px 3px;
     color: white;
+    font-size: 12px;
     background-color: black;
     position: absolute;
-    bottom:0;
-    right:0;
+    left: 70%;
+    top: 66%;
+}
+.btn-privacy {
+  font-weight: bold;
+  padding: 2px 3px;
+  color: black;
+  font-size: 15px;
+  background-color: white;
+  position: absolute;
+  left: 74%;
+  top: 5%;
 }
 
 .followed{
@@ -144,4 +166,10 @@ label.error {
 img.tab-follow {
     width: 125px;
     height: 125px;
+}
+.font-profile-tab {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: center;
 }

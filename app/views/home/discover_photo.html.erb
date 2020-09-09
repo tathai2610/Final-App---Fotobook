@@ -1,28 +1,5 @@
+<%=render "navbar/authenticated_navbar" %>
 
-<nav class="navbar navbar-expand-md navbar-dark avatar px-5">
-  <a class="navbar-brand font-weight-bold pl-lg-5" href="#">Fotobook</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline mt-2 my-lg-0 w-100 col-lg-5 ">
-          <input class="form-control my-lg-0 w-100" type="search" placeholder="Search Photo / Album" aria-label="Search">
-        </form>
-
-        <ul class="navbar-nav col-lg-auto text-center offset-lg-4 offset-md-4">
-          <li class="nav-item active d-none d-lg-block">
-            <button type="button" class="nav-link btn btn-light font-weight-bold rounded-circle text-color"><%= "#{current_user.lastname[0]}#{current_user.firstname[0]}"%></button>
-          </li>
-          <li class="nav-item active mr-lg-5">
-            <a class="nav-link" href="#"><%= "#{current_user.lastname} #{current_user.firstname}" %></a>
-          </li>
-          <li class="nav-item active ml-lg-5">
-            <%=link_to "Logout", destroy_user_session_path, method: 'delete', class:"nav-link" %>
-          </li>
-        </ul>
-  </div>
-</nav>
 
     <div class="container-fluid h-100">
         <div class="row page h-100">
@@ -51,21 +28,36 @@
                        <% @photos.each do |photo| %>
                        <div class="col-lg-6 col-sm-12 col-md-6 p-3 d-lg-inline-flex" >
                         <div class="col-lg-6 col-sm-12 col-md-12 p-0 box-shadow">
-                         <img title="<%=photo.title%>" desc="<%=photo.description%>" src="<%=photo.image%>" style="width:100%;height:100%;cursor:pointer" data-toggle="modal" data-target="#modal-photo">
-                         <%= image_tag photo.image_url, title: photo.title, desc: photo.description, style:"width:100%;height:100%;cursor:pointer", data-toggle:"modal" data-target:"#modal-photo" %>
+                         <%= image_tag(photo.image_url, 'title': photo.title, 'desc': photo.description, style:"width:100%;height:260px;cursor:pointer", 'data-toggle':"modal", 'data-target':"#modal-photo") %>
                         </div>
                         <div class="col-lg-6 p-2 col-sm-12 col-md-12 page d-block box-shadow">
                           <div class="container h-100">
                             <div class="d-flex align-items-center mb-2">
+
+                              <% if photo.user.avatar.file.nil? %>
                               <img src="https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png" class="rounded-circle" style="width:30px;height:30px;" alt="" />
-                              <span class="font-weight-bold text-color ml-2"><%= "#{photo.user.lastname} #{photo.user.firstname}" %></span>
+                              <% else %>
+                              <% image_tag photo.user.avatar.url, { style:"height:30px;width:30px;"}%>
+                              <% end%>
+
+                              <a class="font-weight-bold text-color ml-2 text-decoration-none" href="<%=user_path(photo.user_id)%>"><%= "#{photo.user.firstname} #{photo.user.lastname}" %></a>
+                              <%if photo.user_id != current_user.id %>
+                              <% if Follow.where(follower_id:current_user, followee_id:photo.user_id).present? %>
                               <button type="button" class="rounded-pill followed btn btm-sm font-size-sm p-1 ml-auto" name="follow">Following</button>
+                              <% else %>
+                              <button type="button" class="rounded-pill follow btn btm-sm font-size-sm p-1 ml-auto" name="follow">Follow</button>
+                              <% end %>
+                              <% end %>
                             </div>
 
                             <span><b><%=photo.title%></b></span>
                             <p class=" font-size"><%=photo.description%></p>
                             <div>
-                              <span class="blue-heart"><i class="fas fa-heart"></i></span>
+                              <% if Like.where(user_id:current_user, likeable_type: "Photo", likeable_id:photo.id).present? %>
+                              <span class="text-color"><i class="fas fa-heart"></i></span>
+                              <% else %>
+                              <span class="text-gray"><i class="fas fa-heart"></i></span>
+                              <% end %>
                               <span><small><%= photo.likes.size %> </small></span>
                               <span class="float-right"><small class="text-secondary "><%= photo.created_at.strftime("%I:%M %p %-d/%-m/%Y") %></small></span>
                             </div>

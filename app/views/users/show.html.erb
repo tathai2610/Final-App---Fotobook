@@ -1,0 +1,68 @@
+<%=render "navbar/authenticated_navbar" %>
+<div class="container-fluid h-100">
+    <div class="row page h-100">
+      <div class="col-lg-2 pt-4 justify-content-center ">
+        <ul class="nav flex-lg-column pl-lg-5 pl-md-5 p-md-auto justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=authenticated_root_path%>">Feeds</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=discover_photos_path%>">Discover</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-8 p-3 h-100">
+        <div class="col bg-white h-100 px-lg-4">
+          <div class="row p-5">
+                  <div class="col-auto justify-content-center">
+                      <img src="https://images.squarespace-cdn.com/content/v1/584b770d20099e727cae4b7a/1552418343896-PYHRSQ4STXK8R8G16W5D/ke17ZwdGBToddI8pDm48kE7wb8oKQjYFvEij_PHMOSh7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmEczKEiHaQrO44vfJ0kKvINi3gaTiUfKZFC85yLj-X80CmVffK4pMyZgdh4QXvTO3/jeff-hopper-74069-unsplash.jpg?format=300w" alt="avatar" class=" rounded rounded-circle" style="height:175px; width:175px;"/>
+                  </div>
+                  <div class="col">
+                    <%if @user_own_profile %>
+                      <button type="button" class="rounded-pill btn btm-sm btn-edit-profile" >Edit Profile</button>
+                      <%else%>
+                      <button type="button" class="rounded-pill followed btn btm-sm font-size-sm p-1" name="follow">Following</button>
+                      <%end%>
+                      <div class="username my-1"><%= "#{@user.firstname} #{@user.lastname}" %></div>
+                      <ul class="nav">
+                          <li class="nav-item">
+                            <a class="nav-link text-color font-profile-tab" href="#"><%=Photo.where(user_id:@user, shared: true).count%> <span class="font-size">PHOTOS</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link text-secondary font-profile-tab" href="#"><%=Album.where(user_id:@user, shared: true).count%> <span class="font-size">ALBUMS</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link text-secondary font-profile-tab" href="#"><%=@user.followees.count%> <span class="font-size">FOLLOWINGS</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link text-secondary font-profile-tab" href="#"><%=@user.followers.count%> <span class="font-size">FOLLOWERS</span></a>
+                          </li>
+                      </ul>
+                      <%if @user_own_profile %>
+                      <a href="<%=new_photo_path%>" class="rounded-pill btn btm-sm btn-add-photo float-right btn-success" role="button"> Add Photo </a>
+                      <%end%>
+                  </div>
+              </div>
+              <div class="row mt-3 px-4">
+                  <!--                    photo-->
+                  <% if @photos %>
+                  <% @photos.each do |photo| %>
+                    <div class="col-lg-3 col-md-3 col-sm-6" >
+                        <%if @user_own_profile %>
+                        <a href="" class="rounded-pill btn btm-sm btn-edit-photo" role="button"> EDIT </a>
+                        <%end%>
+                        <%= image_tag(photo.image_url, style:"width:200px;height:200px;", class:"rounded mx-auto d-block", 'data-toggle':"modal", 'data-target':"#modal-photo")%>
+                        <%if photo.shared == false %>
+                        <a href="" class="rounded-pill btn btm-sm btn-privacy" role="button"> <i class="fas fa-lock"></i> </a>
+                        <%end%>
+                        <p class="font-size text-center mt-1 mb-4"><%= photo.title %></p>
+                    </div>
+                    <% end %>
+                    <% end %>
+              </div>
+        </div>
+        <div class="col-lg-2 col-md-2"></div>
+    </div>
+</div>
+</div>
+  <%= render "home/modal" %>

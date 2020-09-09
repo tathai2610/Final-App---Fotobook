@@ -5,6 +5,16 @@ class UsersController < ApplicationController
     end
 
     def show
+      @user = User.find(params[:id])
+      @user_own_profile = @user == current_user
+      if @user_own_profile
+        @photos = Photo.where(user_id: current_user).order(created_at: :desc)
+      else
+        @photos = Photo.where(user_id: @user, shared: true).order(created_at: :desc)
+      end
+    end
+
+    def show_album
     end
 
     def create
@@ -23,9 +33,16 @@ class UsersController < ApplicationController
 
     end
 
+    def edit
+    end
+
+    def update
+      current_user = User.new(user_detail)
+    end
+
     private
       def user_detail
-        params.require(:user).permit(:firstname, :lastname, :email, :password, :password_confirmation)
+        params.require(:user).permit(:firstname, :lastname, :email)
       end
 
 end
