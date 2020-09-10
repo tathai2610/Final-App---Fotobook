@@ -1,0 +1,191 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ body {
+     font-family: 'Roboto';
+ }
+ label.error {
+     color: red;
+ }
+ .login-box {
+     border: 2px solid #E0E0E0;
+     border-radius: 12px;
+ }
+ #album-tab, #photo-tab{
+   border: 2px solid #3C5999;
+ }
+ #user-slash {
+     height: 95px;
+     width: 95px;
+ }
+ .page {
+     background-color: #f8f8f8;
+ }
+ .avatar {
+     background-color: #3C5999;
+     color: white;
+     border-color: #3C5999;
+ }
+ .box-shadow {
+     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+     border-radius: 3px 0px 0px 3px;
+ }
+ .font-size {
+     font-size: 14px;
+ }
+ .font-size-sm {
+     font-size: 10px;
+ }
+ .text-color, .blue-heart, .nav-link.btn.btn-light.font-weight-bold.rounded-circle.text-color {
+     color: #3C5999;
+ }
+ .text-gray {
+   color: #828282;
+ }
+ .grey-heart{
+     color :grey;
+ }
+ .btn-edit-profile {
+     color: #3C5999;
+     border-color: #3C5999;
+     border-width: 2px;
+     padding: 2px 3px;
+     font-size: 14px;
+     line-height: 16px;
+     font-weight: bold;
+ }
+ .username {
+     font-size: 45px;
+     line-height: 53px;
+     font-weight: bold;
+ }
+
+ .btn-add-photo{
+     padding: 2px 3px;
+     font-weight: bold;
+     font-size: 15px;
+     line-height: 18px;
+     border-color: #219653;
+     border-width: 2px;
+ }
+ .btn-edit-photo {
+     font-weight: bold;
+     padding: 2px 3px;
+     color: white;
+     font-size: 12px;
+     background-color: black;
+     position: absolute;
+     left: 70%;
+     top: 66%;
+ }
+ .btn-privacy {
+   font-weight: bold;
+   padding: 2px 3px;
+   color: black;
+   font-size: 15px;
+   background-color: white;
+   position: absolute;
+   left: 74%;
+   top: 5%;
+ }
+
+ .followed{
+   color: white;
+   background: linear-gradient(238.39deg, #EB6057 27.49%, #F2994A 69.05%);
+   font-weight: 800;
+   padding: 1px 5px;
+ }
+ .follow {
+   color:  tomato;
+   background-color: white;
+   border-color: tomato;
+   border-width: 2px;
+   font-weight: 600;
+   padding: 3px 5px;
+ }
+ .uploader-hold {
+     width: 215px;
+     height: 215px;
+     background: #F2F2F2;
+     border: 2px dashed #BDBDBD;
+     box-sizing: border-box;
+     border-radius: 5px;
+ }
+ .upload-photo {
+     width: 215px;
+     height: 215px;
+
+ }
+ .plus-icon {
+   opacity :0.6;
+ }
+ .edit-header{
+     opacity: 0.7;
+     width: 90%;
+ }
+ .overflow {
+     white-space: nowrap;
+     width: 90%;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     display: inline-block;
+ }
+ .img-holder{
+     height: 250px;
+     width: 250px;
+     display: block;
+ }
+ .rotate10{
+     transform: rotate(10deg);
+     position: absolute;
+     height: 215px;
+     width: 215px;
+ }
+ .rotate5{
+     transform: rotate(5deg);
+     position: absolute;
+     height: 215px;
+     width: 215px;
+ }
+ .norotate{
+     height: 215px;
+     width: 215px;
+ }
+ .photo-profile-edit {
+     height: 200px;
+     width: 200px;
+ }
+ #btn-change {
+     bottom: 10px;
+     opacity: 0.7;
+ }
+ .col.bg-white.p-3 {
+     height:900px;
+ }
+
+ .font-tab-header {
+     font-size: 20px;
+ }
+ img.tab-follow {
+     width: 125px;
+     height: 125px;
+ }
+ .font-profile-tab {
+     font-weight: bold;
+     font-size: 24px;
+     line-height: 28px;
+     text-align: center;
+ }

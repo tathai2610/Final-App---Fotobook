@@ -30,4 +30,6 @@ class User < ApplicationRecord
     validates :lastname, format: { with: /\A[a-zA-Z]+\z/, message: "should contain only letters"}
 
     validates :email, uniqueness: true, presence: true, email: true, length: {maximum: 255}
+
+    scope :follow?, ->(user, post) { user.followees.find_by(id: post.user_id) }
 end

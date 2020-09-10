@@ -12,10 +12,15 @@ class Photo < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
+  scope :feed_photo, -> (current_user) { where(user_id:current_user.followees, shared:true).or(Photo.where(user_id:current_user)).order(created_at: :desc) }
+  scope :discover_photo, -> { where(shared:true).order(created_at: :desc) }
+
   private
     def check_description
       unless description.present?
         self.description = "This photo of user who has id #{user_id}"
       end
     end
+
+
 end

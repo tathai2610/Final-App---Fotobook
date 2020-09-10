@@ -10,6 +10,9 @@ class Album < ApplicationRecord
 
    before_validation :check_description
 
+   scope :feed_album, -> (current_user) { where(user_id:current_user.followees, shared:true).or(Album.where(user_id:current_user)).order(created_at: :desc) }
+   scope :discover_album, -> { where(shared:true).order(created_at: :desc) }
+
    private
      def check_description
        unless description.present?
