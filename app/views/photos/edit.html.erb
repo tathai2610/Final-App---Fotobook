@@ -22,9 +22,9 @@
                   <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
                 <% end %>
 
-                <%= form_for @photo, html: { id: "new-photo-form" } do |f| %>
                 <div class="row justify-content-between mt-3">
                     <div class="col-md-6 col-sm-12">
+                      <%= form_for @photo do |f| %>
                         <div class="form-group">
                             <%= f.label :title %>
                             <%= f.text_field :title, placeholder: "Photo Title", class:"form-control col-md-11" %>
@@ -40,12 +40,11 @@
                     </div>
                 </div>
                 <div class="row mt-3 mx-1">
-                  <div class="form-group uploader-hold">
-                    <%= f.file_field :image, class:"browse-field opacity-0" %>
-                  </div>
+                  <%= image_tag @photo.image.url, class:"browse-field" %>
                 </div>
                 <div class="row mt-3 mx-1">
                   <%= f.submit "Save", class: "btn btn-success" %>
+                  <%= link_to raw('<i class="far fa-trash-alt mr-1"></i>Delete'), photo_path(@photo), class: 'btn btn-danger ml-5', method: :delete, data: {confirm: 'Are you sure?'} %>
                 </div>
                 <% end %>
         </div>

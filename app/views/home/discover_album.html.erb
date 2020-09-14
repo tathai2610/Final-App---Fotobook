@@ -15,8 +15,8 @@
               <div class="col bg-white h-100">
                 <div class="row justify-content-center">
                   <div class="row m-3 btn-group">
-                    <a href="<%=discover_photos_path%>" class="btn rounded-left text-color font-weight-bold" role="button" id="photo-tab"> PHOTO </a>
-                    <a href="" class="btn rounded-right avatar font-weight-bold" role="button" id="album-tab"> ALBUM </a>
+                    <a href="<%=discover_photos_path%>" class="btn rounded-left text-color font-weight-bold" role="button" id="photo-option"> PHOTO </a>
+                    <a href="" class="btn rounded-right avatar font-weight-bold" role="button" id="album-option"> ALBUM </a>
                   </div>
                 </div>
 
@@ -37,11 +37,11 @@
                               <% if album.user.avatar.file.nil? %>
                               <a class="btn avatar font-weight-bold rounded-circle p-2" type="button" href="<%=user_path(album.user_id)%>"><%= "#{album.user.firstname[0]}#{album.user.lastname[0]}"%></a>
                               <% else %>
-                              <% image_tag album.user.avatar.url, { style:"height:30px;width:30px;"}%>
+                              <a href="<%=user_path(album.user_id)%>" ><%= image_tag album.user.avatar.url, { style:"height:40px;width:40px;",class:"rounded-circle"}%></a>
                               <% end%>
                               <span class="font-weight-bold text-color ml-2"><%= "#{album.user.firstname} #{album.user.lastname}" %></span>
                               <%if album.user_id != current_user.id %>
-                              <% if followed?(current_user,album) %>
+                              <% if followed?(current_user,album.user) %>
                               <button type="button" class="rounded-pill followed btn btm-sm font-size-sm p-1 ml-auto" name="follow">Following</button>
                               <% else %>
                               <button type="button" class="rounded-pill follow btn btm-sm font-size-sm p-1 ml-auto" name="follow">Follow</button>

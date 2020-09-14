@@ -1,10 +1,10 @@
 class Album < ApplicationRecord
    belongs_to :user
-   has_and_belongs_to_many :photos
+   has_many :photos, dependent: :destroy
 
    has_many :likes, as: :likeable
 
-   validates :title, presence: true, length: {maximum: 140, minimum: 10}
+   validates :title, presence: true, length: {maximum: 140}
    validates :description, presence: true, length: {maximum: 300}
    validates :shared, inclusion: { in: [true, false]}
 

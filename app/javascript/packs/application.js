@@ -51,21 +51,21 @@ $(document).ready(function(){
                 maxlength: "Your last name should be at most 25 characters"
             },
             'user[email]': {
-              required: "Please enter you email",
+              required: "Please enter your email",
               maxlength: "Your email should be at most 255 characters"
             },
             'user[password]': {
-                required: "Please provide a password",
+                required: "Please enter a password",
                 maxlength: "Your password must be at most 64 characters",
                 minlength: "Your password must be at least 6 characters"
             },
             'user[password_confirmation]': {
-                required: "Please provide a password",
+                required: "Please enter a password",
                 maxlength: "Your password must be at most 64 characters",
                 equalTo: "Please enter the same password as above"
             }
         }
-    }),
+    });
     $("#signin-form").validate({
         rules: {
           'user[email]': {
@@ -84,13 +84,13 @@ $(document).ready(function(){
         },
         'user[password]': {
             required: "Please provide a password",
-            maxlength: "Your password must be at most 64 characters"
+            maxlength: "Your password should be at most 64 characters"
           }
       }
-  }),
+  });
   $("img[title]").on({
       "click": function() {
-          if ($("#photo-tab").hasClass("avatar")) {
+          if ($("#photo-option").hasClass("avatar")) {
 
             var title = $(this).attr("title");
             var source = $(this).attr("src");
@@ -112,5 +112,59 @@ $(document).ready(function(){
           }
 
       }
-  })
+  });
+  if ($)
+  $("#new-photo-form").validate({
+    rules: {
+      'photo[title]': {
+        required: true,
+        maxlength: 140
+      },
+      'photo[description]': {
+        required: true,
+        maxlength: 300
+      },
+      'photo[image]': {
+        required: true,
+        accept: "image/jpeg,image/png,image/gif"
+      }
+    },
+    messages: {
+      'photo[title]': {
+        required: "Please enter a title for your photo",
+        maxlength: "Title should be maximum 140 characters"
+      },
+      'photo[description]': {
+        required: "Please enter a description for your photo",
+        maxlength: "Description should be maximum 300 charaters"
+      },
+      'photo[image]': {
+        required: "Please choose a photo",
+        accept: "Only image with .jpeg, .png or .gif is accepted"
+      }
+    }
+  });
+  $("#edit-user-form").validate({
+    rules: {
+      'user[current_password]': 'required'
+    },
+    messages: {
+      'user[current_password]': "Please enter your current password to confirm changes"
+    }
+  });
+  $("[name='follow']").on({
+      "click": function() {
+          if ($(this).hasClass("follow")) {
+            $(this).removeClass('follow');
+            $(this).addClass('followed');
+            $(this).html("following");
+          }
+          else {
+            $(this).removeClass('followed');
+            $(this).addClass('follow');
+            $(this).html("follow");
+          }
+        }
+      });
+
 });

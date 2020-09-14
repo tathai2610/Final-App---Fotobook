@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag "style" %>
 
 <nav class="navbar navbar-expand-md navbar-dark avatar px-5">
-  <a class="navbar-brand font-weight-bold pl-lg-5" href="#">Fotobook</a>
+  <a class="navbar-brand pl-lg-5 font-weight-bold" href="#" >Fotobook</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -13,13 +13,17 @@
 
         <ul class="navbar-nav col-lg-auto text-center offset-lg-4 offset-md-4">
           <li class="nav-item active d-none d-lg-block">
+            <% if current_user.avatar.file.nil? %>
             <a class="nav-link btn btn-light font-weight-bold rounded-circle text-color" type="button" href="<%=user_path(current_user.id)%>"><%= "#{current_user.firstname[0]}#{current_user.lastname[0]}"%></a>
+            <% else %>
+            <%= image_tag (current_user.avatar.url), class:"nav-link rounded-circle avatar-icon p-0 " %>
+            <% end %>
           </li>
           <li class="nav-item active mr-lg-5">
-            <a class="nav-link" href="<%=user_path(current_user.id)%>"><%= "#{current_user.firstname} #{current_user.lastname}" %></a>
+            <a class="nav-link font-weight-bold" href="<%=user_path(current_user.id)%>"><%= "#{current_user.firstname} #{current_user.lastname}" %></a>
           </li>
           <li class="nav-item active ml-lg-5">
-            <%=link_to "Logout", destroy_user_session_path, method: 'delete', class:"nav-link" %>
+            <%=link_to "Logout", destroy_user_session_path, method: 'delete', class:"nav-link font-weight-bold" %>
           </li>
         </ul>
   </div>

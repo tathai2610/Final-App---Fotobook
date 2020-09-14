@@ -14,7 +14,7 @@
       <div class="col-lg-8 p-3 h-100">
         <div class="col bg-white h-100 px-lg-4">
                 <div class="font-weight-bold border-bottom d-flex justify-content-between align-items-center py-3">
-                    <p class="h5">New Photo </p>
+                    <p class="h5">New Album </p>
                     <button class="btn avatar">Back</button>
                 </div>
 
@@ -22,12 +22,12 @@
                   <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
                 <% end %>
 
-                <%= form_for @photo, html: { id: "new-photo-form" } do |f| %>
+                <%= form_for @album, html: { id: "new-album-form" } do |f| %>
                 <div class="row justify-content-between mt-3">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <%= f.label :title %>
-                            <%= f.text_field :title, placeholder: "Photo Title", class:"form-control col-md-11" %>
+                            <%= f.text_field :title, placeholder: "Album Title", class:"form-control col-md-11" %>
                         </div>
                         <div class="form-group">
                             <%= f.label :shared, "Sharing mode" %> <br/>
@@ -36,12 +36,12 @@
                     </div>
                     <div class="col-md-6 col-sm-12 form-group">
                         <%= f.label :description %> <br/>
-                        <%= f.text_area :description, rows: "5", placeholder:"Photo Description", class:"form-control" %>
+                        <%= f.text_area :description, rows: "5", placeholder:"Album Description", class:"form-control" %>
                     </div>
                 </div>
                 <div class="row mt-3 mx-1">
-                  <div class="form-group uploader-hold">
-                    <%= f.file_field :image, class:"browse-field opacity-0" %>
+                  <div class="form-group uploader-hold" >
+                    <%= f.file_field :image, { class:"browse-field opacity-0" } %>
                   </div>
                 </div>
                 <div class="row mt-3 mx-1">

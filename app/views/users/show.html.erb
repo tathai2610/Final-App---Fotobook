@@ -14,54 +14,70 @@
         <div class="col bg-white h-100 px-lg-4">
           <div class="row p-5">
                   <div class="col-auto justify-content-center">
-                      <img src="https://images.squarespace-cdn.com/content/v1/584b770d20099e727cae4b7a/1552418343896-PYHRSQ4STXK8R8G16W5D/ke17ZwdGBToddI8pDm48kE7wb8oKQjYFvEij_PHMOSh7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmEczKEiHaQrO44vfJ0kKvINi3gaTiUfKZFC85yLj-X80CmVffK4pMyZgdh4QXvTO3/jeff-hopper-74069-unsplash.jpg?format=300w" alt="avatar" class=" rounded rounded-circle" style="height:175px; width:175px;"/>
+                      <%= image_tag (if @user.avatar.file.present? then @user.avatar.url else "https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?w=415" end), { class:"rounded rounded-circle avatar-profile" } %>
                   </div>
                   <div class="col">
                     <%if @user_own_profile %>
-                      <button type="button" class="rounded-pill btn btm-sm btn-edit-profile" >Edit Profile</button>
+                      <a href="<%=edit_user_registration_path%>" class="rounded-pill btn btm-sm btn-edit-profile">Edit Profile</a>
                       <%else%>
+                      <% if followed?(current_user,@user) %>
                       <button type="button" class="rounded-pill followed btn btm-sm font-size-sm p-1" name="follow">Following</button>
+                      <% else %>
+                      <button type="button" class="rounded-pill follow btn btm-sm font-size-sm p-1" name="follow">Follow</button>
+                      <% end %>
                       <%end%>
                       <div class="username my-1"><%= "#{@user.firstname} #{@user.lastname}" %></div>
-                      <ul class="nav">
+                      <ul class="nav nav-tab" id="myTab" role="tablist">
                           <li class="nav-item">
-                            <a class="nav-link text-color font-profile-tab" href="#"><%=Photo.where(user_id:@user, shared: true).count%> <span class="font-size">PHOTOS</span></a>
+                            <a class="nav-link font-profile-tab border-0 active" id="photo-tab" data-toggle="tab" href="#photo" role="tab" aria-controls="photo" aria-selected="true">
+                              <%=@user.photos.where(album_id:nil).count%> <span class="font-size">PHOTOS</span></a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link text-secondary font-profile-tab" href="#"><%=Album.where(user_id:@user, shared: true).count%> <span class="font-size">ALBUMS</span></a>
+                            <a class="nav-link font-profile-tab border-0" id="album-tab" data-toggle="tab" href="#album" role="tab" aria-controls="album" aria-selected="false">
+                              <%=@user.albums.count%> <span class="font-size">ALBUMS</span></a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link text-secondary font-profile-tab" href="#"><%=@user.followees.count%> <span class="font-size">FOLLOWINGS</span></a>
+                            <a class="nav-link font-profile-tab" id="following-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following" aria-selected="false">
+                              <%=@user.followees.count%> <span class="font-size">FOLLOWINGS</span></a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link text-secondary font-profile-tab" href="#"><%=@user.followers.count%> <span class="font-size">FOLLOWERS</span></a>
+                            <a class="nav-link font-profile-tab" id="follower-tab" data-toggle="tab" href="#follower" role="tab" aria-controls="follower" aria-selected="false">
+                              <%=@user.followers.count%> <span class="font-size">FOLLOWERS</span></a>
                           </li>
                       </ul>
-                      <%if @user_own_profile %>
+                      <% if @user_own_profile %>
                       <a href="<%=new_photo_path%>" class="rounded-pill btn btm-sm btn-add-photo float-right btn-success" role="button"> Add Photo </a>
                       <%end%>
                   </div>
               </div>
-              <div class="row mt-3 px-4">
-                  <!--                    photo-->
-                  <% if @photos %>
-                  <% @photos.each do |photo| %>
-                    <div class="col-lg-3 col-md-3 col-sm-6" >
-                        <%if @user_own_profile %>
-                        <a href="" class="rounded-pill btn btm-sm btn-edit-photo" role="button"> EDIT </a>
-                        <%end%>
-                        <%= image_tag(photo.image_url, style:"width:200px;height:200px;", class:"rounded mx-auto d-block", 'data-toggle':"modal", 'data-target':"#modal-photo")%>
-                        <%if photo.shared == false %>
-                        <a href="" class="rounded-pill btn btm-sm btn-privacy" role="button"> <i class="fas fa-lock"></i> </a>
-                        <%end%>
-                        <p class="font-size text-center mt-1 mb-4"><%= photo.title %></p>
-                    </div>
-                    <% end %>
-                    <% end %>
-              </div>
+
+              <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
+              <% end %>
+
+                <div class="row row-cols-4 mt-3 px-2 tab-pane fade show active" id="photo" role="tabpanel" aria-labelledby="photo-tab">
+                    <!--                    photo-->
+                    <% if @photos %>
+                    <% @photos.each do |photo| %>
+                      <div class="col-lg-3 col-md-3 col-sm-6" >
+                          <%if @user_own_profile %>
+                          <a href="<%= edit_photo_path(photo.id) %>" class="rounded-pill btn btm-sm btn-edit-photo" role="button"> EDIT </a>
+                          <%end%>
+                          <%= image_tag(photo.image_url, style:"width:200px;height:200px;", class:"rounded mx-auto d-block", 'data-toggle':"modal", 'data-target':"#modal-photo")%>
+                          <%if photo.shared == false %>
+                          <a href="" class="rounded-pill btn btm-sm btn-privacy" role="button"> <i class="fas fa-lock"></i> </a>
+                          <%end%>
+                          <p class="font-size text-center mt-1 mb-4"><%= photo.title %></p>
+                      </div>
+                      <% end %>
+                      <% end %>
+                </div>
+                <div class="tab-pane fade" id="albums" role="tabpanel" aria-labelledby="album-tab">
+                </div>
+            
         </div>
-        <div class="col-lg-2 col-md-2"></div>
     </div>
+      <div class="col-lg-2 col-md-2"></div>
 </div>
 </div>
   <%= render "home/modal" %>

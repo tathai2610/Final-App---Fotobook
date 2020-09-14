@@ -4,11 +4,14 @@ body {
 label.error {
     color: red;
 }
+div {
+  border: solid red;
+}
 .login-box {
     border: 2px solid #E0E0E0;
     border-radius: 12px;
 }
-#album-tab, #photo-tab{
+#album-option, #photo-option{
   border: 2px solid #3C5999;
 }
 #user-slash {
@@ -33,7 +36,7 @@ label.error {
 .font-size-sm {
     font-size: 10px;
 }
-.text-color, .blue-heart, .nav-link.btn.btn-light.font-weight-bold.rounded-circle.text-color {
+.text-color, .blue-heart, .nav-link.btn.btn-light.font-weight-bold.rounded-circle.text-color, a.active {
     color: #3C5999;
 }
 .text-gray {
@@ -46,10 +49,10 @@ label.error {
     color: #3C5999;
     border-color: #3C5999;
     border-width: 2px;
-    padding: 2px 3px;
+    padding: 2px 4px;
     font-size: 14px;
     line-height: 16px;
-    font-weight: bold;
+    font-weight: 700;
 }
 .username {
     font-size: 45px;
@@ -58,7 +61,7 @@ label.error {
 }
 
 .btn-add-photo{
-    padding: 2px 3px;
+    padding: 2px 4px;
     font-weight: bold;
     font-size: 15px;
     line-height: 18px;
@@ -108,10 +111,13 @@ label.error {
     box-sizing: border-box;
     border-radius: 5px;
 }
-.upload-photo {
-    width: 215px;
-    height: 215px;
-
+.avatar-profile {
+    width: 175px;
+    height: 175px;
+}
+.avatar-icon {
+  width: 40px;
+  height: 40px;
 }
 .plus-icon {
   opacity :0.6;
@@ -148,13 +154,17 @@ label.error {
     height: 215px;
     width: 215px;
 }
-.photo-profile-edit {
-    height: 200px;
-    width: 200px;
+.photo-profile-edit, .browse-field {
+    height: 215px;
+    width: 215px;
 }
 #btn-change {
     bottom: 10px;
     opacity: 0.7;
+}
+#avatar-change-field {
+  bottom: 10px;
+  opacity: 0.0;
 }
 .col.bg-white.p-3 {
     height:900px;
@@ -163,13 +173,12 @@ label.error {
 .font-tab-header {
     font-size: 20px;
 }
-img.tab-follow {
-    width: 125px;
-    height: 125px;
-}
 .font-profile-tab {
     font-weight: bold;
     font-size: 24px;
     line-height: 28px;
     text-align: center;
+}
+.opacity-0 {
+  opacity: 0.0;
 }

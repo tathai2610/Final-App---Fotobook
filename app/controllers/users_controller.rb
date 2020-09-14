@@ -8,13 +8,17 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       @user_own_profile = @user == current_user
       if @user_own_profile
-        @photos = Photo.where(user_id: current_user).order(created_at: :desc)
+        @photos = current_user.photos.where(album_id:nil).order(created_at: :desc)
+        @albums = current_user.albums.order(created_at: :desc)
+        @followings = current_user.followers.order(:firstname)
+        @followers = current_user.followees.order(:firstname)
       else
-        @photos = Photo.where(user_id: @user, shared: true).order(created_at: :desc)
-      end
-    end
+        @photos = @user.photos.where(shared:true).order(created_at: :desc)
+        @albums = @user.albums.where(shared:true).order(created_at: :desc)
+        @followings = @user.followers.order(:firstname)
+        @followers = @user.followees.order(:firstname)
 
-    def show_album
+      end
     end
 
     def create
@@ -37,12 +41,26 @@ class UsersController < ApplicationController
     end
 
     def update
-      current_user = User.new(user_detail)
+    end
+
+    def follow
+        @user = User.find(set_user)
+        follow = Follow.find_by(follower_id:current_user, followee_id:@user)
+        if follow
+            follow.destroy
+        else
+            current_user.followees << @user
+        end
+        render 'follow.js.erb'
     end
 
     private
       def user_detail
         params.require(:user).permit(:firstname, :lastname, :email)
+      end
+
+      def set_user
+        params.require(:followee_id)
       end
 
 end

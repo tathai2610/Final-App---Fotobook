@@ -1,43 +1,101 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="container-fluid h-100">
+    <div class="row page h-100">
+      <div class="col-lg-2 pt-4 justify-content-center ">
+        <ul class="nav flex-lg-column pl-lg-5 pl-md-5 p-md-auto justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=authenticated_root_path%>">Feeds</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=discover_photos_path%>">Discover</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-lg-8 p-3 h-100">
+        <div class="col bg-white h-100 px-lg-4">
+          <div class="font-weight-bold border-bottom d-flex justify-content-between align-items-center py-3 mb-5">
+              <p class="h5">Edit User Profile </p>
+          </div>
+         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, id: "edit-user-form" }) do |f| %>
+         <%= render "devise/shared/error_messages", resource: resource %>
+
+                <div class="row justify-content-center">
+                  <div class="col-auto row photo-profile-edit field justify-content-center">
+                    <% if current_user.avatar.file.nil?%>
+                    <%= image_tag "https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?w=415", { class:"norotate photo-profile-edit rounded"} %>
+                    <% else %>
+                    <%= image_tag current_user.avatar.url, { class:"norotate photo-profile-edit rounded" } %>
+                    <% end %>
+                    <button type="button" class="btn btn-light position-absolute" style="cursor:pointer;" id="btn-change">CHANGE</button>
+                    <%= f.file_field :avatar, class: 'btn btn-light position-absolute', id:"avatar-change-field" %>
+                  </div>
+                </div>
+
+                <div class="row form-group justify-content-center col-auto mt-4">
+                    <div class="col-md-7 offset-md-5 text-color font-weight-bold">
+                      Basic Information
+                    </div>
+                </div>
+                <div class="row form-group justify-content-center col-auto field">
+                    <%= f.label :firstname, "First Name", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                    <div class="col-md-7 col-sm-11">
+                      <%= f.text_field :firstname, autofocus: true, class:"form-control col-md-6 col-sm-12" %>
+                    </div>
+                </div>
+                <div class="row form-group justify-content-center col-auto field">
+                    <%= f.label :lastname, "Last Name", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                    <div class="col-md-7 col-sm-11">
+                      <%= f.text_field :lastname, class:"form-control col-md-6 col-sm-12" %>
+                    </div>
+                </div>
+                <div class="row form-group justify-content-center col-auto field">
+                    <%= f.label :email, "Email", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                    <div class="col-md-7 col-sm-11">
+                      <%= f.email_field :email, class:"form-control col-md-6 col-sm-12" %>
+                    </div>
+                </div>
+                <div class="row form-group justify-content-center col-auto">
+                    <div class="col-md-7 offset-md-5 actions">
+                      <%= f.submit "Save", class: "btn btn-success" %>
+                    </div>
+                </div>
+
+
+
+                <div class="row form-group  justify-content-center col-auto mt-4">
+                    <div class="col-md-7 offset-md-5 text-color font-weight-bold">
+                      Password
+                    </div>
+                </div>
+                <div class="row form-group  justify-content-center col-auto field">
+                    <%= f.label :current_password, "Current Password", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                    <div class="col-md-7 col-sm-11">
+                      <%= f.password_field :current_password, class:"form-control col-md-6 col-sm-12" %>
+                    </div>
+                </div>
+                <div class="row form-group  justify-content-center col-auto field">
+                    <%= f.label :password, "New Password", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                    <div class="col-md-7 col-sm-11">
+                      <%= f.password_field :password, class:"form-control col-md-6 col-sm-12" %>
+                    </div>
+                </div>
+                <div class="row form-group  justify-content-center col-auto field">
+                    <%= f.label :password_confirmation, "Password confirmation", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                    <div class="col-md-7 col-sm-11">
+                      <%= f.password_field :password_confirmation, class:"form-control col-md-6 col-sm-12" %>
+                    </div>
+                </div>
+                <div class="row form-group justify-content-center col-auto">
+                    <div class="col-md-7 offset-md-5 actions">
+                      <%= f.submit "Save", class: "btn btn-success" %>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
   </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
