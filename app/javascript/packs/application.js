@@ -143,10 +143,16 @@ $(document).ready(function(){
   });
   $("#edit-user-form").validate({
     rules: {
-      'user[current_password]': 'required'
+      'user[current_password]': 'required',
+      'user[avatar]': {
+        extension: "jpeg|png|gif"
+      }
     },
     messages: {
-      'user[current_password]': "Please enter your current password to confirm changes"
+      'user[current_password]': "Please enter your current password to confirm changes",
+      'user[avatar]': {
+        extension: "Only image with .jpeg, .png or .gif is accepted"
+      }
     }
   });
   $("[name='follow']").on({

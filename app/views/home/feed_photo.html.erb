@@ -45,11 +45,11 @@
                             <p class="font-size"><%=photo.description%></p>
                             <div>
                               <% if liked?(current_user, photo) %>
-                              <%= link_to raw('<span class="text-color"><i class="fas fa-heart"></i></span>'), like_path(type:Photo, post_id:photo.id), method: :post, remote: true, name:"like" %>
+                              <%= link_to raw('<i class="fas fa-heart text-color"></i>'), like_path(type:'Photo', post_id: photo.id, user_id: current_user.id), method: :post, remote: true, name:"like" %>
                               <% else %>
-                              <%= link_to raw('<span class="text-gray"><i class="fas fa-heart"></i></span>'), like_path(type:Photo, post_id:photo.id), method: :post, remote: true, name:"like" %>
+                              <%= link_to raw('<i class="fas fa-heart text-gray"></i>'), like_path(type:'Photo', post_id: photo.id, user_id: current_user.id), method: :post, remote: true, name:"like" %>
                               <% end %>
-                               <span class="font-size-sm likes-count"><%= photo.likes.size %> </span>
+                               <span class="font-size-sm"><%= photo.likes.size %> </span>
                               <span class="float-right"><small class="text-secondary "><%= photo.created_at.strftime("%I:%M %p %-d/%-m/%Y") %></small></span>
                             </div>
                           </div>
