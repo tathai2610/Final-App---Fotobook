@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: drunep7nv
+  api_key: '314336293721742'
+  api_secret: mpXQSIKVnh7J5zKaw9ZducpU93I
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: drunep7nv
+  api_key: '314336293721742'
+  api_secret: mpXQSIKVnh7J5zKaw9ZducpU93I
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: drunep7nv
+  api_key: '314336293721742'
+  api_secret: mpXQSIKVnh7J5zKaw9ZducpU93I
+  enhance_image_tag: true
+  static_file_support: false

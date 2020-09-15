@@ -23,5 +23,6 @@ Rails.application.routes.draw do
   get 'discover-albums', to: 'home#discover_album'
 
   post 'follow', to: 'users#follow'
+  post 'like', to: 'users#like'
 
 end

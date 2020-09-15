@@ -14,7 +14,7 @@
       <div class="col-lg-8 p-3 h-100">
         <div class="col bg-white h-100 px-lg-4">
                 <div class="font-weight-bold border-bottom d-flex justify-content-between align-items-center py-3">
-                    <p class="h5">Edit Photo </p>
+                    <p class="h5">Edit Album </p>
                     <button class="btn avatar">Back</button>
                 </div>
 
@@ -24,10 +24,10 @@
 
                 <div class="row justify-content-between mt-3">
                     <div class="col-md-6 col-sm-12">
-                      <%= form_for @photo do |f| %>
+                      <%= form_for @album do |f| %>
                         <div class="form-group">
                             <%= f.label :title %>
-                            <%= f.text_field :title, placeholder: "Photo Title", class:"form-control col-md-11" %>
+                            <%= f.text_field :title, placeholder: "Album Title", class:"form-control col-md-11" %>
                         </div>
                         <div class="form-group">
                             <%= f.label :shared, "Sharing mode" %> <br/>
@@ -36,15 +36,22 @@
                     </div>
                     <div class="col-md-6 col-sm-12 form-group">
                         <%= f.label :description %> <br/>
-                        <%= f.text_area :description, rows: "5", placeholder:"Photo Description", class:"form-control" %>
+                        <%= f.text_area :description, rows: "5", placeholder:"Album Description", class:"form-control" %>
                     </div>
                 </div>
                 <div class="row mt-3 mx-1">
-                  <%= image_tag @photo.image.url, class:"browse-field" %>
+                  <% if @photos %>
+                  <% @photos.each do |photo| %>
+                  <%= image_tag photo.image.url, class:"browse-field mr-3 mb-3" %>
+                  <% end %>
+                  <% end %>
+                  <div class="form-group uploader-hold" >
+                    <%= f.file_field :image, { class:"browse-field opacity-0" } %>
+                  </div>
                 </div>
                 <div class="row mt-3 mx-1">
                   <%= f.submit "Save", class: "btn btn-success" %>
-                  <%= link_to raw('<i class="far fa-trash-alt mr-1"></i>Delete'), photo_path(@photo), class: 'btn btn-danger ml-5', method: :delete, data: {confirm: 'Are you sure?'} %>
+                  <%= link_to raw('<i class="far fa-trash-alt mr-1"></i>Delete'), album_path(@album), class: 'btn btn-danger ml-5', method: :delete, data: {confirm: 'Are you sure?'} %>
                 </div>
                 <% end %>
         </div>

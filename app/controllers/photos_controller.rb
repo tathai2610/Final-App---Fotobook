@@ -17,14 +17,14 @@ class PhotosController < ApplicationController
  end
 
  def edit
-   @photo = Photo.find(params[:id])
+   @photo = current_user.photos.find(params[:id])
  end
 
  def update
-   @photo = Photo.find(params[:id])
+   @photo = current_user.photos.find(params[:id])
 
-   if update_attributes(photo_detail)
-     flash[:success] = "New photo has been successfully added."
+   if @photo.update_attributes(photo_detail)
+     flash[:success] = "A photo has been successfully updated."
      redirect_to user_path(@photo.user_id)
    else
      flash[:danger] = @photo.errors.full_messages[0]
@@ -33,7 +33,7 @@ class PhotosController < ApplicationController
  end
 
  def destroy
-   @photo = Photo.find(params[:id])
+   @photo = current_user.photos.find(params[:id])
    user_id = @photo.user_id
 
      if @photo.destroy
@@ -43,7 +43,7 @@ class PhotosController < ApplicationController
        flash[:danger] = @photo.errors.full_messages[0]
        redirect_to edit_photo_path(@photo.id)
      end
-   end
+ end
 
  private
 

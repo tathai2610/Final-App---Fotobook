@@ -46,7 +46,7 @@
                              <p class=" font-size"><%=album.description%></p>
                              <div>
                                <span class=<%= if liked?(current_user, album) then "text-color" else "text-gray" end%> ><i class="fas fa-heart"></i></span>
-                               <span><small><%= album.likes.size %> </small></span>
+                                <span class="font-size-sm"><%= album.likes.size %> </span>
                                <span class="float-right"><small class="text-secondary "><%= album.created_at.strftime("%I:%M %p %-d/%-m/%Y") %></small></span>
                              </div>
                            </div>

@@ -90,8 +90,7 @@ $(document).ready(function(){
   });
   $("img[title]").on({
       "click": function() {
-          if ($("#photo-option").hasClass("avatar")) {
-
+          if ($("#photo-option").hasClass("avatar") || $("#photo-tab").hasClass("active")) {
             var title = $(this).attr("title");
             var source = $(this).attr("src");
             var description = $(this).attr("desc");
@@ -99,7 +98,6 @@ $(document).ready(function(){
             $("#modal-photo-body").attr("src", source);
             document.getElementById("modal-photo-title").innerHTML = title
             document.getElementById("modal-photo-description").innerHTML = description
-
           }
           else {
             var title = $(this).attr("title");
@@ -113,7 +111,6 @@ $(document).ready(function(){
 
       }
   });
-  if ($)
   $("#new-photo-form").validate({
     rules: {
       'photo[title]': {
@@ -165,6 +162,21 @@ $(document).ready(function(){
             $(this).html("follow");
           }
         }
-      });
+    });
+  $("a[name='like']").on({
+    "click": function() {
+      var count = $(this).next();
 
+      if ($(this).children().hasClass("text-color")) {
+        $(this).children().removeClass("text-color");
+        $(this).children().addClass("text-gray");
+        count.text(parseInt(count.text())-1);
+      }
+      else {
+        $(this).children().removeClass("text-gray");
+        $(this).children().addClass("text-color");
+        count.text(parseInt(count.text())+1);
+      }
+    }
+  })
 });

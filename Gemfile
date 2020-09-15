@@ -66,3 +66,5 @@ gem 'mini_magick', '~> 4.3' # Customize image
 
 gem 'devise' # User session
 
+gem 'cloudinary'
+
