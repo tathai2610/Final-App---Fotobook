@@ -1,0 +1,54 @@
+<div class="container-fluid h-100">
+  <div class="row page h-100">
+    <div class="col-lg-2 pt-3 justify-content-center ">
+      <ul class="nav flex-lg-column pl-lg-5 pl-md-5 p-md-auto justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link text-gray font-weight-bold" href="<%= admin_photos_path %>">Manage Photos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-color font-weight-bold" href="">Manage Albums</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-gray font-weight-bold" href="<%= admin_users_path %>">Manage User</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-lg-8 p-3 h-100">
+      <div class="col bg-white h-100 px-lg-4 pb-4">
+
+        <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
+        <% end %>
+
+        <div class="row p-3">
+          <% if @albums %>
+          <% @albums.each do |album| %>
+          <div class="col-lg-3 col-md-3 col-sm-6 row justify-content-center mx-0 p-0 mb-5" >
+            <div class=" div200 pt-3">
+              <% if photos = album.photos.order(created_at: :desc) %>
+              <% if photos[2] %>
+              <%= image_tag photos[2].image_url, {class:"rotate10 rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <% end %>
+              <% if photos[1] %>
+              <%= image_tag photos[1].image_url, {class:"rotate5 rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <% end %>
+              <%= image_tag photos[0].image_url, {class:"norotate rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <% end %>
+            </div>
+            <div class=" align-items-center justify-content-between d-flex position-absolute bg-dark black-title-album col-11" >
+              <span class="col-9 overflow "><%=album.title%></span>
+              <%= link_to raw('<i class="far fa-edit fa-lg text-white"></i>'), edit_admin_album_path(album.id), class:"col-3" %>
+            </div>
+
+          </div>
+          <% end %>
+          <% end %>
+        </div>
+        <%= paginate @albums%>
+
+      </div>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>

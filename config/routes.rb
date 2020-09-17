@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  default_url_options :host => 'localhost'
 
   devise_for :users
   devise_scope :user do
@@ -13,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users
+  resources :users, only: :show
   resources :photos
   resources :albums
 
@@ -24,5 +23,11 @@ Rails.application.routes.draw do
 
   post 'follow', to: 'users#follow'
   post 'like', to: 'users#like'
+
+  namespace :admin do
+    resources :albums, except: [:new, :create, :show]
+    resources :photos, except: [:new, :create, :show]
+    resources :users, except: [:new, :create, :show]
+  end
 
 end

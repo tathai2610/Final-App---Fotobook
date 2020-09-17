@@ -1,0 +1,53 @@
+<div class="container-fluid h-100">
+    <div class="row page h-100">
+      <div class="col-lg-2 pt-3 justify-content-center ">
+        <ul class="nav flex-lg-column pl-lg-5 pl-md-5 p-md-auto justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=admin_photos_path%>">Manage Photos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=admin_albums_path%>">Manage Albums</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-color font-weight-bold" href="">Manage User</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-lg-8 p-3 h-100">
+        <div class="col bg-white h-100 px-lg-4 pb-4">
+
+          <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
+          <% end %>
+                <table class="table table-borderless ">
+                  <thead class="border-bottom">
+                    <tr>
+                      <th scope="col">First name</th>
+                      <th scope="col">Last name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Last login</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @users.each do |user| %>
+                    <tr>
+                      <td scope="row"><%= "#{user.firstname}"%></td>
+                      <td><%= "#{user.lastname}"%></td>
+                      <td><%= "#{user.email}"%></td>
+                      <td><%= user.last_sign_in_at.strftime("%I:%M %p %-d/%-m/%Y") %></td>
+                        <td>
+                            <%= link_to "Edit", edit_admin_user_path(user.id), class:"btn btn-success" %>
+                            <%= link_to "Delete", admin_user_path(user.id), method: :delete, class:"btn btn-danger" %>
+                        </td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+
+          </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+  </div>

@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag "style" %>
 
 <nav class="navbar navbar-expand-md navbar-dark avatar px-5">
-  <a class="navbar-brand pl-lg-5 font-weight-bold" href="#" >Fotobook</a>
+  <a class="navbar-brand pl-lg-5 font-weight-bold" href="<%=authenticated_root_path%>" >Fotobook</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -12,7 +12,7 @@
         </form>
 
         <ul class="navbar-nav col-lg-auto text-center offset-lg-4 offset-md-4">
-          <li class="nav-item active d-none d-lg-block">
+          <li class="nav-item active d-none d-md-block">
             <% if current_user.avatar.file.nil? %>
             <a class="nav-link btn btn-light font-weight-bold rounded-circle text-color" type="button" href="<%=user_path(current_user.id)%>"><%= "#{current_user.firstname[0]}#{current_user.lastname[0]}"%></a>
             <% else %>

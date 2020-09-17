@@ -40,9 +40,9 @@
                               <% if photo.user_id != current_user.id %>
 
                               <% if followed?(current_user,photo.user) %>
-                              <%= link_to "following", follow_path(followee_id:photo.user_id), method: :post, remote: true, name:"follow", class:"rounded-pill followed btn btm-sm font-size-sm p-1 ml-auto"%>
+                              <%= link_to "following", follow_path(followee_id:photo.user_id), method: :post, remote: true, name:"follow", class:"rounded-pill followed btn btm-sm font-size-sm p-1 ml-auto font-weigth-bold"%>
                               <% else %>
-                              <%= link_to "follow", follow_path(followee_id:photo.user_id), method: :post, remote: true, name:"follow", class:"rounded-pill follow btn btm-sm font-size-sm p-1 ml-auto"%>
+                              <%= link_to "follow", follow_path(followee_id:photo.user_id), method: :post, remote: true, name:"follow", class:"rounded-pill follow btn btm-sm font-size-sm p-1 ml-auto font-weigth-bold"%>
                               <% end %>
 
                               <% end %>
@@ -64,6 +64,9 @@
                       </div>
                       <% end %>
                     <% end %>
+                </div>
+                <div class="row justify-content-center m-2">
+                <%= paginate @photos%>
                 </div>
               </div>
             </div>

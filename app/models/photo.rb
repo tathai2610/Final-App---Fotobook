@@ -12,8 +12,10 @@ class Photo < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
-  scope :feed_photo, -> (current_user) { where(user_id:current_user.followees, shared:true, album_id:nil).or(Photo.where(user_id:current_user, album_id:nil)).order(created_at: :desc) }
   scope :discover_photo, -> { where(shared:true, album_id:nil).order(created_at: :desc) }
+  scope :all_photo, -> {where(album_id:nil).order(created_at: :desc)}
+  scope :current_user_photo, -> {where(album_id:nil).order(created_at: :desc)}
+  scope :user_photo, -> {where(shared:true, album_id:nil).order(created_at: :desc)}
 
   private
     def check_description

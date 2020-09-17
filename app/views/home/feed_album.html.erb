@@ -1,71 +1,76 @@
 
-    <div class="container-fluid h-100">
-        <div class="row page h-100">
-          <div class="col-lg-2 pt-4 justify-content-center ">
-            <ul class="nav flex-lg-column pl-lg-5 p-md-auto justify-content-center">
-              <li class="nav-item">
-                <a class="nav-link text-color font-weight-bold" href="">Feeds</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-gray font-weight-bold" href="<%=discover_photos_path%>">Discover</a>
-              </li>
-            </ul>
+<div class="container-fluid h-100">
+  <div class="row page h-100">
+    <div class="col-lg-2 pt-4 justify-content-center ">
+      <ul class="nav flex-lg-column pl-lg-5 p-md-auto justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link text-color font-weight-bold" href="">Feeds</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-gray font-weight-bold" href="<%=discover_photos_path%>">Discover</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-8 p-3 h-100">
+      <div class="col bg-white h-100">
+        <div class="row justify-content-center">
+          <div class="row m-3 btn-group">
+            <a href="<%=authenticated_root_path%>" class="btn rounded-left text-color font-weight-bold" role="button" id="photo-option"> PHOTO </a>
+            <a href="" class="btn rounded-right avatar font-weight-bold" role="button" id="album-option"> ALBUM </a>
           </div>
-            <div class="col-lg-8 p-3 h-100">
-              <div class="col bg-white h-100">
-                <div class="row justify-content-center">
-                  <div class="row m-3 btn-group">
-                    <a href="<%=authenticated_root_path%>" class="btn rounded-left text-color font-weight-bold" role="button" id="photo-option"> PHOTO </a>
-                    <a href="" class="btn rounded-right avatar font-weight-bold" role="button" id="album-option"> ALBUM </a>
-                  </div>
+        </div>
+
+        <div class="row">
+          <% if @albums %>
+          <% @albums.each do |album| %>
+          <div class="col-lg-6 col-sm-12 col-md-6 p-3 d-lg-inline-flex" >
+            <div class="col-lg-6 col-sm-12 col-md-12 box-shadow position-relative p-4 text-center page">
+
+              <% if photos = album.photos.order(created_at: :desc) %>
+              <% if photos[2] %>
+              <%= image_tag photos[2].image_url, {class:"rotate10 rounded ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <% end %>
+              <% if photos[1] %>
+              <%= image_tag photos[1].image_url, {class:"rotate5 rounded ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <% end %>
+              <%= image_tag photos[0].image_url, {class:"norotate rounded ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <% end %>
+            </div>
+            <div class="col-lg-6 p-2 col-sm-12 col-md-12 page d-block box-shadow position-relative border-left-0">
+              <div class="container h-100">
+                <div class="d-flex align-items-center mb-2">
+                  <% if album.user.avatar.file.nil? %>
+                  <a class="btn avatar font-weight-bold rounded-circle p-2" type="button" href="<%=user_path(album.user_id)%>"><%= "#{album.user.firstname[0]}#{album.user.lastname[0]}"%></a>
+                  <% else %>
+                  <a href="<%=user_path(album.user_id)%>" ><%= image_tag album.user.avatar.url, { style:"height:40px;width:40px;",class:"rounded-circle"}%></a>
+                  <% end%>
+                  <span class="font-weight-bold text-color ml-2"><%= "#{album.user.firstname} #{album.user.lastname}" %></span>
                 </div>
 
-                    <div class="row">
-                      <% if @albums %>
-                       <% @albums.each do |album| %>
-                       <div class="col-lg-6 col-sm-12 col-md-6 p-3 d-lg-inline-flex" >
-                        <div class="col-lg-6 col-sm-12 col-md-12 box-shadow position-relative p-4 text-center page border-right-0">
-                          <%= image_tag "https://www.islandair.com/wp-content/uploads/2018/07/ellie-adams-247024-unsplash.jpg", {class:"rotate10 ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
-                          <%= image_tag "https://www.islandair.com/wp-content/uploads/2018/07/ellie-adams-247024-unsplash.jpg", {class:"rotate5 ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
-                          <%= image_tag "https://www.islandair.com/wp-content/uploads/2018/07/ellie-adams-247024-unsplash.jpg", {class:"norotate ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
-
-                         </div>
-                         <div class="col-lg-6 p-2 col-sm-12 col-md-12 page d-block box-shadow position-relative border-left-0">
-                           <div class="container h-100">
-                             <div class="d-flex align-items-center mb-2">
-                               <% if album.user.avatar.file.nil? %>
-                               <a class="btn avatar font-weight-bold rounded-circle p-2" type="button" href="<%=user_path(album.user_id)%>"><%= "#{album.user.firstname[0]}#{album.user.lastname[0]}"%></a>
-                               <% else %>
-                               <a href="<%=user_path(album.user_id)%>" ><%= image_tag album.user.avatar.url, { style:"height:40px;width:40px;",class:"rounded-circle"}%></a>
-                               <% end%>
-                               <span class="font-weight-bold text-color ml-2"><%= "#{album.user.firstname} #{album.user.lastname}" %></span>
-
-                             </div>
-
-                             <span><b><%=album.title%></b></span>
-                             <p class=" font-size"><%=album.description%></p>
-                             <div>
-                               <% if liked?(current_user, album) %>
-                               <%= link_to raw('<i class="fas fa-heart text-color"></i>'), like_path(type:'Album', post_id: album.id, user_id: current_user.id), method: :post, remote: true, name:"like" %>
-                               <% else %>
-                               <%= link_to raw('<i class="fas fa-heart text-gray"></i>'), like_path(type:'Album', post_id: album.id, user_id: current_user.id), method: :post, remote: true, name:"like" %>
-                               <% end %>
-                                <span class="font-size-sm"><%= album.likes.size %> </span>
-                               <span class="float-right"><small class="text-secondary "><%= album.created_at.strftime("%I:%M %p %-d/%-m/%Y") %></small></span>
-                             </div>
-                           </div>
-                         </div>
-                       </div>
-                       <% end %>
-                     <% end %>
-
-                    </div>
-
-
+                <span><b><%=album.title%></b></span>
+                <p class=" font-size"><%=album.description%></p>
+                <div>
+                  <% if liked?(current_user, album) %>
+                  <%= link_to raw('<i class="fas fa-heart text-color"></i>'), like_path(type:'Album', post_id: album.id, user_id: current_user.id), method: :post, remote: true, name:"like" %>
+                  <% else %>
+                  <%= link_to raw('<i class="fas fa-heart text-gray"></i>'), like_path(type:'Album', post_id: album.id, user_id: current_user.id), method: :post, remote: true, name:"like" %>
+                  <% end %>
+                  <span class="font-size-sm"><%= album.likes.size %> </span>
+                  <span class="float-right"><small class="text-secondary "><%= album.created_at.strftime("%I:%M %p %-d/%-m/%Y") %></small></span>
+                </div>
               </div>
             </div>
-            <div class="col-lg-2"></div>
+          </div>
+          <% end %>
+          <% end %>
         </div>
+        <div class="row justify-content-center m-2">
+          <%= paginate @albums%>
+        </div>
+      </div>
     </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
 
-  <%= render "modal" %>
+<%= render "modal" %>

@@ -1,0 +1,88 @@
+<div class="container-fluid h-100">
+    <div class="row page h-100">
+      <div class="col-lg-2 pt-3 justify-content-center ">
+        <ul class="nav flex-lg-column pl-lg-5 pl-md-5 p-md-auto justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=admin_photos_path%>">Manage Photos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=admin_albums_path%>">Manage Albums</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-color font-weight-bold" href="">Manage User</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-8 p-3 h-100">
+        <div class="col bg-white h-100 px-lg-4 pb-4">
+                <div class="font-weight-bold border-bottom d-flex justify-content-between align-items-center py-3 mb-5">
+                    <p class="h5">Edit User Profile </p>
+                    <a class="btn avatar" href="<%= admin_users_path %>">Back </a>
+                </div>
+
+                <% flash.each do |key, value| %>
+                  <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
+                <% end %>
+
+                <%= form_for(@user, url: admin_user_path(@user.id), html: { method: :put, id: "admin-edit-user-form" }) do |f| %>
+
+
+                       <div class="row justify-content-center">
+                         <div class="col-auto row photo-profile-edit field justify-content-center">
+                           <% if @user.avatar.file.nil?%>
+                           <%= image_tag "https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?w=415", { class:"norotate photo-profile-edit rounded"} %>
+                           <% else %>
+                           <%= image_tag @user.avatar.url, { class:"norotate photo-profile-edit rounded" } %>
+                           <% end %>
+                           <button type="button" class="btn btn-light position-absolute" style="cursor:pointer;" id="btn-change">CHANGE</button>
+                           <%= f.file_field :avatar, class: 'btn btn-light position-absolute', id:"avatar-change-field" %>
+                         </div>
+                       </div>
+
+                       <div class="row form-group justify-content-center col-auto mt-4">
+                           <div class="col-md-7 offset-md-5 text-color font-weight-bold">
+                             Basic Information
+                           </div>
+                       </div>
+                       <div class="row form-group justify-content-center col-auto field">
+                           <%= f.label :firstname, "First Name", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                           <div class="col-md-7 col-sm-11">
+                             <%= f.text_field :firstname, autofocus: true, class:"form-control col-md-6 col-sm-12" %>
+                           </div>
+                       </div>
+                       <div class="row form-group justify-content-center col-auto field">
+                           <%= f.label :lastname, "Last Name", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                           <div class="col-md-7 col-sm-11">
+                             <%= f.text_field :lastname, class:"form-control col-md-6 col-sm-12" %>
+                           </div>
+                       </div>
+                       <div class="row form-group justify-content-center col-auto field">
+                           <%= f.label :email, "Email", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                           <div class="col-md-7 col-sm-11">
+                             <%= f.email_field :email, class:"form-control col-md-6 col-sm-12" %>
+                           </div>
+                       </div>
+
+                       <div class="row form-group justify-content-center col-auto field">
+                           <%= f.label :password, "Password", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %><br />
+                           <div class="col-md-7 col-sm-11">
+                             <%= f.password_field :password, class:"form-control col-md-6 col-sm-12" %>
+                           </div>
+                       </div>
+                       <div class="row form-group justify-content-center col-auto field">
+                          <%= f.label :active, "Active", class:"col-md-5 col-sm-11 col-form-label font-weight-bold text-md-right" %>
+                          <div class="col-md-7 col-sm-11 d-flex align-items-center">
+                              <%= f.check_box :active %>
+                          </div>
+                      </div>
+                       <div class="row form-group justify-content-center col-auto">
+                           <div class="col-md-7 offset-md-5 actions">
+                             <%= f.submit "Save", class: "btn btn-success" %>
+                           </div>
+                       </div>
+                       <% end %>
+                   </div>
+                 </div>
+                 <div class="col-lg-2"></div>
+             </div>
+           </div>

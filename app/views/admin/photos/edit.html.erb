@@ -1,0 +1,56 @@
+<div class="container-fluid h-100">
+    <div class="row page h-100">
+      <div class="col-lg-2 pt-3 justify-content-center ">
+        <ul class="nav flex-lg-column pl-lg-5 pl-md-5 p-md-auto justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link text-color font-weight-bold" href="">Manage Photos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%=admin_albums_path%>">Manage Albums</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-gray font-weight-bold" href="<%= admin_users_path %>">Manage User</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-8 p-3 h-100">
+        <div class="col bg-white h-100 px-lg-4 pb-4">
+                <div class="font-weight-bold border-bottom d-flex justify-content-between align-items-center py-3">
+                    <p class="h5">Edit Photo </p>
+                    <a class="btn avatar" href="<%= admin_photos_path %>">Back </a>
+                </div>
+
+                <% flash.each do |key, value| %>
+                  <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
+                <% end %>
+
+                <div class="row justify-content-between mt-3">
+                    <div class="col-md-6 col-sm-12">
+                      <%= form_for @photo, url: admin_photo_path(@photo.id), html: {method: :put} do |f| %>
+                        <div class="form-group">
+                            <%= f.label :title %>
+                            <%= f.text_field :title, placeholder: "Photo Title", class:"form-control col-md-11" %>
+                        </div>
+                        <div class="form-group">
+                            <%= f.label :shared, "Sharing mode" %> <br/>
+                            <%= f.select(:shared, [['Public','true'], ['Private','false']], {}, { :class => 'col-lg-5 col-md-11 custom-select' }) %>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <%= f.label :description %> <br/>
+                        <%= f.text_area :description, rows: "5", placeholder:"Photo Description", class:"form-control" %>
+                    </div>
+                </div>
+                <div class="row mt-3 mx-1">
+                  <%= image_tag @photo.image.url, class:"browse-field" %>
+                </div>
+                <div class="row mt-3 mx-1">
+                  <%= f.submit "Save", class: "btn btn-success" %>
+                  <%= link_to raw('<i class="far fa-trash-alt mr-1"></i>Delete'), admin_photo_path(@photo.id), class: 'btn btn-danger ml-5', method: :delete, data: {confirm: 'Are you sure?'} %>
+                </div>
+                <% end %>
+        </div>
+      </div>
+      <div class="col-lg-2"></div>
+    </div>
+  </div>

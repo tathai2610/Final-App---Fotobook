@@ -1,4 +1,5 @@
 
+
 <div class="container-fluid h-100">
   <div class="row page h-100">
     <div class="col-lg-2 pt-4 justify-content-center ">
@@ -21,13 +22,14 @@
             <div class="col-12 mt-3 text-lg-left text-sm-center">
               <%if @user_own_profile %>
               <a href="<%=edit_user_registration_path%>" class="rounded-pill btn btm-sm btn-edit-profile">Edit Profile</a>
-              <%else%>
-              <% if followed?(current_user,@user) %>
+              <%if @user.admin %>
+              <a href="<%=admin_photos_path%>" class="rounded-pill font-weight-bold btn btm-sm btn-primary d-lg-inline ml-lg-5">Admin Management</a>
+              <% end %>
+              <% elsif followed?(current_user,@user) %>
               <button type="button" class="rounded-pill followed btn btm-sm font-size p-1 " name="follow">following</button>
               <% else %>
               <button type="button" class="rounded-pill follow btn btm-sm font-size p-1 " name="follow">follow</button>
               <% end %>
-              <%end%>
             </div>
             <div class="username my-1 col-12 text-lg-left text-sm-center"><%= "#{@user.firstname} #{@user.lastname}" %></div>
             <div class="col-12">
@@ -35,170 +37,189 @@
                 <div class="nav nav-tab p-0 justify-content-center justify-content-lg-start" id="nav-tab" role="tablist">
 
                   <a class="nav-item font-profile-tab nav-link border-0 active" id="photo-tab" data-toggle="tab" href="#nav-photo" role="tab" aria-controls="nav-photo" aria-selected="true">
-                    <%=@user.photos.where(album_id:nil).count%> <span class="font-size">PHOTOS</span></a>
+                    <%=@user.photos.where(album_id:nil).count%> <span class="font-size">PHOTOS</span>
+                  </a>
 
-                    <a class="nav-item font-profile-tab nav-link border-0 " id="album-tab" data-toggle="tab" href="#nav-album" role="tab" aria-controls="nav-album" aria-selected="false">
-                      <%=@user.albums.count%> <span class="font-size">ALBUMS</span></a>
+                  <a class="nav-item font-profile-tab nav-link border-0 " id="album-tab" data-toggle="tab" href="#nav-album" role="tab" aria-controls="nav-album" aria-selected="false">
+                    <%=@user.albums.count%> <span class="font-size">ALBUMS</span>
+                  </a>
 
-                      <a class="nav-item font-profile-tab nav-link " id="following-tab" data-toggle="tab" href="#nav-following" role="tab" aria-controls="nav-following" aria-selected="false">
-                        <%=@user.followees.count%> <span class="font-size">FOLLOWINGS</span></a>
+                  <a class="nav-item font-profile-tab nav-link " id="following-tab" data-toggle="tab" href="#nav-following" role="tab" aria-controls="nav-following" aria-selected="false">
+                    <%=@user.followees.count%> <span class="font-size">FOLLOWINGS</span>
+                  </a>
 
-                        <a class="nav-item font-profile-tab nav-link " id="follower-tab" data-toggle="tab" href="#nav-follower" role="tab" aria-controls="nav-follower" aria-selected="false">
-                          <%=@user.followers.count%> <span class="font-size">FOLLOWERS</span></a>
-
-                        </div>
-                      </nav>
-                    </div>
-                  </div>
-                </div>
-
-
-                <% flash.each do |key, value| %>
-                <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
-                <% end %>
-
-                <div class="tab-content" id="nav-tabContent">
-                  <!-- PHOTOS -->
-                  <div class="row mt-3 px-2 tab-pane fade show active" id="nav-photo" role="tabpanel" aria-labelledby="photo-tab">
-                    <div class="row justify-content-end px-5 mb-3">
-                      <% if @user_own_profile %>
-                      <a href="<%=new_photo_path%>" class="rounded-pill btn btm-sm btn-add-photo btn-success" role="button"> Add Photo </a>
-                      <%end%>
-                    </div>
-                    <div class="row">
-                      <% if @photos %>
-                      <% @photos.each do |photo| %>
-                      <div class="col-lg-3 col-md-3 col-sm-6">
-                        <%if @user_own_profile %>
-                        <a href="<%= edit_photo_path(photo.id) %>" class="rounded-pill btn btm-sm btn-edit-photo" role="button"> EDIT </a>
-                        <%end%>
-                        <%= image_tag(photo.image_url, style:"width:200px;height:200px;", class:"rounded mx-auto d-block", 'data-toggle':"modal", 'data-target':"#modal-photo", 'title': photo.title, 'desc': photo.description)%>
-                        <%if photo.shared == false %>
-                        <a href="" class="rounded-pill btn btm-sm btn-privacy" role="button"> <i class="fas fa-lock"></i> </a>
-                        <%end%>
-                        <p class="font-size text-center mt-1 mb-4"><%= photo.title %></p>
-                      </div>
-                      <% end %>
-                      <% end %>
-                    </div>
-                  </div>
-                  <!-- ALBUMS -->
-                  <div class="row mt-3 px-2 tab-pane fade " id="nav-album" role="tabpanel" aria-labelledby="album-tab">
-                    <div class="row justify-content-end px-5 mb-3">
-                    <% if @user_own_profile %>
-                    <a href="<%=new_album_path%>" class="rounded-pill btn btm-sm btn-add-photo btn-success" role="button"> Add Album </a>
-                    <%end%>
-                  </div>
-                  <div class="row">
-                    <% if @albums %>
-                    <% @albums.each do |album| %>
-                    <div class="col-lg-3 col-md-3 col-sm-6 p-3 text-center" >
-                      <% if photos = album.photos.order(created_at: :desc) %>
-                      <% if photos[2] %>
-                      <%= image_tag photos[2].image_url, {class:"rotate10 rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
-                      <% end %>
-                      <% if photos[1] %>
-                      <%= image_tag photos[1].image_url, {class:"rotate5 rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
-                      <% end %>
-                      <%= image_tag photos[0].image_url, {class:"norotate rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
-                      <% end %>
-
-                      <%if @user_own_profile %>
-                      <a href="<%= edit_album_path(album.id) %>" class="rounded-pill btn btm-sm btn-edit-photo" role="button"> EDIT </a>
-                      <%end%>
-
-                      <%if album.shared == false %>
-                      <a href="" class="rounded-pill btn btm-sm btn-privacy" role="button"> <i class="fas fa-lock"></i> </a>
-                      <%end%>
-                      <p class="photo-count p-2 position-absolute font-profile-tab"><%=album.photos.count%><br><span class="font-size">PHOTOS</span></p>
-
-                      <p class="font-size text-center mt-2 mb-4"><%= album.title %></p>
-                    </div>
-                    <% end %>
-                    <% end %>
-                  </div>
-                </div>
-                <!-- FOLLOWINGS -->
-                <div class="row mt-3 px-2 tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="following-tab">
-
-                  <div class="row px-lg-3">
-                    <% if @followings %>
-                    <% @followings.each do |following| %>
-
-                    <div class="col-sm-11 col-md-5 col-lg-3" >
-                      <div class="col page py-3 shadow-sm mb-4">
-                        <% if following.avatar.file.nil? %>
-                        <a class="btn div100px font-weight-bold rounded-circle p-2 avatar mx-auto d-block text-center" style="font-size: 50px;" type="button" href="<%=user_path(following.id)%>"><%= "#{following.firstname[0]}#{following.lastname[0]}"%></a>
-                        <% else %>
-                        <a href="<%=user_path(following.id)%>" ><%= image_tag following.avatar.url, { class:"rounded-circle div100px mx-auto d-block "}%></a>
-                        <% end%>
-
-                        <a class=" text-center font-weight-bold text-dark my-2 text-decoration-none h5 mx-auto d-block" href="<%=user_path(following.id)%>"><%= "#{following.firstname} #{following.lastname}" %></a>
-                        <div class="row justify-content-around my-1">
-                          <div class="col-5 ">
-                            <p class="text-primary font-tab-header font-weight-bold text-center" ><%=following.photos.count%> <br><span class="font-size">PHOTOS</span></p>
-                          </div>
-                          <div class="col-5 ">
-                            <p class="text-primary font-tab-header font-weight-bold text-center" ><%=following.albums.count%> <br><span class="font-size">ALBUMS</span></p>
-                          </div>
-                        </div>
-                        <div class="text-center my-1">
-                          <% if @user_own_profile || followed?(current_user, following) %>
-                          <%= link_to "following", follow_path(followee_id:following.id), method: :post, remote: true, name:"follow", class:"rounded-pill followed btn btm-sm font-size p-1 ml-auto"%>
-                          <% else %>
-                          <%= link_to "follow", follow_path(followee_id:following.id), method: :post, remote: true, name:"follow", class:"rounded-pill follow btn btm-sm font-size p-1 ml-auto"%>
-                          <% end %>
-                        </div>
-                      </div>
-                    </div>
-                    <% end %>
-                    <% end %>
-                  </div>
+                  <a class="nav-item font-profile-tab nav-link " id="follower-tab" data-toggle="tab" href="#nav-follower" role="tab" aria-controls="nav-follower" aria-selected="false">
+                    <%=@user.followers.count%> <span class="font-size">FOLLOWERS</span>
+                  </a>
 
                 </div>
-                <!-- FOLLOWERS -->
-                <div class="row mt-3 px-2 tab-pane fade " id="nav-follower" role="tabpanel" aria-labelledby="follower-tab">
-
-                  <div class="row px-lg-3">
-                    <% if @followers %>
-                    <% @followers.each do |follower| %>
-
-                    <div class="col-sm-11 col-md-5 col-lg-3" >
-                      <div class="col page py-3 shadow-sm mb-4">
-                        <% if follower.avatar.file.nil? %>
-                        <a class="btn div100px font-weight-bold rounded-circle p-2 avatar mx-auto d-block text-center" style="font-size: 50px;" type="button" href="<%=user_path(follower.id)%>"><%= "#{follower.firstname[0]}#{follower.lastname[0]}"%></a>
-                        <% else %>
-                        <a href="<%=user_path(follower.id)%>" ><%= image_tag follower.avatar.url, { class:"rounded-circle div100px mx-auto d-block "}%></a>
-                        <% end%>
-
-                        <a class=" text-center font-weight-bold text-dark my-2 text-decoration-none h5 mx-auto d-block" href="<%=user_path(follower.id)%>"><%= "#{follower.firstname} #{follower.lastname}" %></a>
-                        <div class="row justify-content-around my-1">
-                          <div class="col-5 ">
-                            <p class="text-primary font-tab-header font-weight-bold text-center" ><%=follower.photos.count%> <br><span class="font-size">PHOTOS</span></p>
-                          </div>
-                          <div class="col-5 ">
-                            <p class="text-primary font-tab-header font-weight-bold text-center" ><%=follower.albums.count%> <br><span class="font-size">ALBUMS</span></p>
-                          </div>
-                        </div>
-                        <div class="text-center my-1">
-                          <% if followed?(current_user, follower) %>
-                          <%= link_to "following", follow_path(followee_id:follower.id), method: :post, remote: true, name:"follow", class:"rounded-pill followed btn btm-sm font-size p-1 ml-auto"%>
-                          <% else %>
-                          <%= link_to "follow", follow_path(followee_id:follower.id), method: :post, remote: true, name:"follow", class:"rounded-pill follow btn btm-sm font-size p-1 ml-auto"%>
-                          <% end %>
-                        </div>
-                      </div>
-                    </div>
-                    <% end %>
-                    <% end %>
-                  </div>
-
-                </div>
-
-              </div>
+              </nav>
             </div>
           </div>
-          <div class="col-lg-2 col-md-2"></div>
+        </div>
+
+
+        <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= "#{value}" %></div>
+        <% end %>
+
+        <div class="tab-content" id="nav-tabContent">
+          <!-- PHOTOS -->
+          <div class="row mt-3 px-2 tab-pane fade show active" id="nav-photo" role="tabpanel" aria-labelledby="photo-tab">
+            <div class="row justify-content-end px-5 mb-3">
+              <% if @user_own_profile %>
+              <a href="<%=new_photo_path%>" class="rounded-pill btn btm-sm btn-add-photo btn-success" role="button"> Add Photo </a>
+              <%end%>
+            </div>
+            <div class="row">
+              <% if @photos %>
+              <% @photos.each do |photo| %>
+              <div class="col-lg-3 col-md-3 col-sm-6">
+                <%if @user_own_profile %>
+                <a href="<%= edit_photo_path(photo.id) %>" class="rounded-pill btn btm-sm btn-edit-photo" role="button"> EDIT </a>
+                <%end%>
+                <%= image_tag(photo.image_url, class:"rounded mx-auto d-block div200px", 'data-toggle':"modal", 'data-target':"#modal-photo", 'title': photo.title, 'desc': photo.description)%>
+                <%if photo.shared == false %>
+                <a href="" class="rounded-pill btn btm-sm btn-privacy" role="button"> <i class="fas fa-lock"></i> </a>
+                <%end%>
+                <p class="font-size text-center mt-1 mb-4"><%= photo.title %></p>
+              </div>
+              <% end %>
+              <% end %>
+            </div>
+            <div class="row justify-content-center m-2">
+            <%= paginate @photos%>
+            </div>
+          </div>
+          <!-- ALBUMS -->
+          <div class="row mt-3 px-2 tab-pane fade " id="nav-album" role="tabpanel" aria-labelledby="album-tab">
+            <div class="row justify-content-end px-5 mb-3">
+              <% if @user_own_profile %>
+              <a href="<%=new_album_path%>" class="rounded-pill btn btm-sm btn-add-photo btn-success" role="button"> Add Album </a>
+              <%end%>
+            </div>
+            <div class="row">
+              <% if @albums %>
+              <% @albums.each do |album| %>
+              <div class="col-lg-3 col-md-3 col-sm-6 p-3 text-center" >
+                <% if photos = album.photos.order(created_at: :desc) %>
+                <% if photos[2] %>
+                <%= image_tag photos[2].image_url, {class:"rotate10 rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+                <% end %>
+                <% if photos[1] %>
+                <%= image_tag photos[1].image_url, {class:"rotate5 rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+                <% end %>
+                <%= image_tag photos[0].image_url, {class:"norotate rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+                <% end %>
+
+                <%if @user_own_profile %>
+                <a href="<%= edit_album_path(album.id) %>" class="rounded-pill btn btm-sm btn-edit-photo" role="button"> EDIT </a>
+                <%end%>
+
+                <%if album.shared == false %>
+                <a href="" class="rounded-pill btn btm-sm btn-privacy" role="button"> <i class="fas fa-lock"></i> </a>
+                <%end%>
+                <p class="photo-count p-2 position-absolute font-profile-tab"><%=album.photos.count%><br><span class="font-size">PHOTOS</span></p>
+
+                <p class="font-size text-center mt-2 mb-4"><%= album.title %></p>
+              </div>
+              <% end %>
+              <% end %>
+            </div>
+            <div class="row justify-content-center m-2">
+            <%= paginate @albums%>
+            </div>
+          </div>
+          <!-- FOLLOWINGS -->
+          <div class="row mt-3 px-2 tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="following-tab">
+
+            <div class="row px-lg-3">
+              <% if @followings %>
+              <% @followings.each do |following| %>
+
+              <div class="col-sm-11 col-md-5 col-lg-3" >
+                <div class="col page py-3 shadow-sm mb-4">
+                  <% if following.avatar.file.nil? %>
+                  <a class="btn div100px font-weight-bold rounded-circle p-2 avatar mx-auto d-block text-center" style="font-size: 50px;" type="button" href="<%=user_path(following.id)%>"><%= "#{following.firstname[0]}#{following.lastname[0]}"%></a>
+                  <% else %>
+                  <a href="<%=user_path(following.id)%>" ><%= image_tag following.avatar.url, { class:"rounded-circle div100px mx-auto d-block "}%></a>
+                  <% end%>
+
+                  <a class=" text-center font-weight-bold text-dark my-2 text-decoration-none h5 mx-auto d-block" href="<%=user_path(following.id)%>"><%= "#{following.firstname} #{following.lastname}" %></a>
+                  <div class="row justify-content-around my-1">
+                    <div class="col-5 ">
+                      <p class="text-primary font-tab-header font-weight-bold text-center" ><%=following.photos.count%> <br><span class="font-size">PHOTOS</span></p>
+                    </div>
+                    <div class="col-5 ">
+                      <p class="text-primary font-tab-header font-weight-bold text-center" ><%=following.albums.count%> <br><span class="font-size">ALBUMS</span></p>
+                    </div>
+                  </div>
+                  <div class="text-center my-1">
+                    <% if @user_own_profile || followed?(current_user, following) %>
+                    <%= link_to "following", follow_path(followee_id:following.id), method: :post, remote: true, name:"follow", class:"rounded-pill followed btn btm-sm font-size p-1 ml-auto" %>
+                    <% elsif current_user == following %>
+                    <%= link_to "following", follow_path(followee_id:following.id), method: :post, remote: true, name:"follow", class:"rounded-pill followed btn btm-sm font-size p-1 ml-auto invisible" %>
+                    <% else %>
+                    <%= link_to "follow", follow_path(followee_id:following.id), method: :post, remote: true, name:"follow", class:"rounded-pill follow btn btm-sm font-size p-1 ml-auto"%>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <% end %>
+              <% end %>
+            </div>
+            <div class="row justify-content-center m-2">
+            <%= paginate @followings%>
+            </div>
+
+          </div>
+          <!-- FOLLOWERS -->
+          <div class="row mt-3 px-2 tab-pane fade " id="nav-follower" role="tabpanel" aria-labelledby="follower-tab">
+
+            <div class="row px-lg-3">
+              <% if @followers %>
+              <% @followers.each do |follower| %>
+
+              <div class="col-sm-11 col-md-5 col-lg-3" >
+                <div class="col page py-3 shadow-sm mb-4">
+                  <% if follower.avatar.file.nil? %>
+                  <a class="btn div100px font-weight-bold rounded-circle p-2 avatar mx-auto d-block text-center" style="font-size: 50px;" type="button" href="<%=user_path(follower.id)%>"><%= "#{follower.firstname[0]}#{follower.lastname[0]}"%></a>
+                  <% else %>
+                  <a href="<%=user_path(follower.id)%>" ><%= image_tag follower.avatar.url, { class:"rounded-circle div100px mx-auto d-block "}%></a>
+                  <% end%>
+
+                  <a class=" text-center font-weight-bold text-dark my-2 text-decoration-none h5 mx-auto d-block" href="<%=user_path(follower.id)%>"><%= "#{follower.firstname} #{follower.lastname}" %></a>
+                  <div class="row justify-content-around my-1">
+                    <div class="col-5 ">
+                      <p class="text-primary font-tab-header font-weight-bold text-center" ><%=follower.photos.count%> <br><span class="font-size">PHOTOS</span></p>
+                    </div>
+                    <div class="col-5 ">
+                      <p class="text-primary font-tab-header font-weight-bold text-center" ><%=follower.albums.count%> <br><span class="font-size">ALBUMS</span></p>
+                    </div>
+                  </div>
+                  <div class="text-center my-1">
+                    <% if followed?(current_user, follower) %>
+                    <%= link_to "following", follow_path(followee_id:follower.id), method: :post, remote: true, name:"follow", class:"rounded-pill followed btn btm-sm font-size p-1 ml-auto"%>
+                    <% elsif current_user == follower %>
+                    <%= link_to "following", follow_path(followee_id:follower.id), method: :post, remote: true, name:"follow", class:"rounded-pill followed btn btm-sm font-size p-1 ml-auto invisible" %>
+                    <% else %>
+                    <%= link_to "follow", follow_path(followee_id:follower.id), method: :post, remote: true, name:"follow", class:"rounded-pill follow btn btm-sm font-size p-1 ml-auto"%>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <% end %>
+              <% end %>
+            </div>
+            <div class="row justify-content-center m-2">
+            <%= paginate @followers%>
+            </div>
+          </div>
+
         </div>
       </div>
-      <%= render "home/modal" %>
+    </div>
+    <div class="col-lg-2 col-md-2"></div>
+  </div>
+</div>
+<%= render "home/modal" %>

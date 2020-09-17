@@ -101,10 +101,8 @@ $(document).ready(function(){
           }
           else {
             var title = $(this).attr("title");
-          //  var source = $(this).attr("src");
             var description = $(this).attr("desc");
 
-          //  $("#modal-album-body").attr("src", source);
             document.getElementById("modal-album-title").innerHTML = title
             document.getElementById("modal-album-description").innerHTML = description
           }
@@ -141,6 +139,28 @@ $(document).ready(function(){
       }
     }
   });
+  $("#new-album-form").validate({
+    rules: {
+      'album[title]': {
+        required: true,
+        maxlength: 140
+      },
+      'album[description]': {
+        required: true,
+        maxlength: 300
+      }
+    },
+    messages: {
+      'album[title]': {
+        required: "Please enter a title for your photo",
+        maxlength: "Title should be maximum 140 characters"
+      },
+      'album[description]': {
+        required: "Please enter a description for your photo",
+        maxlength: "Description should be maximum 300 charaters"
+      }
+    }
+  });
   $("#edit-user-form").validate({
     rules: {
       'user[current_password]': 'required',
@@ -161,11 +181,19 @@ $(document).ready(function(){
             $(this).removeClass('follow');
             $(this).addClass('followed');
             $(this).html("following");
+            // if ($("#following-tab")) {
+            //   var count-following = document.getElementById("following-tab");
+            //   count-following.text(parseInt(count-following.text())+1);
+            // }
           }
           else {
             $(this).removeClass('followed');
             $(this).addClass('follow');
             $(this).html("follow");
+            // if ($("#following-tab")) {
+            //   var count-following = document.getElementById("following-tab");
+            //   count-following.text(parseInt(count-following.text())-1);
+            // }
           }
         }
     });

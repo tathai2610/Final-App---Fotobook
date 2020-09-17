@@ -169,7 +169,6 @@ label.error {
 .col.bg-white.p-3 {
     height:900px;
 }
-
 .font-tab-header {
     font-size: 20px;
 }
@@ -200,4 +199,26 @@ label.error {
   color: white;
   top: 27%;
   left: 35%;
+}
+.black-title {
+  width: 215px;
+  height: :25px;
+  background: black;
+  opacity: 0.5;
+  padding: 5px 2px;
+  top:0;
+  left:0;
+}
+.black-title-album {
+
+  height: 30px;
+  opacity: 0.5;
+  padding: 5px 2px;
+}
+.overflow {
+  color:white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
 }

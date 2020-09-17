@@ -5,14 +5,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-
-
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application'%>
 
-
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <script src="https://kit.fontawesome.com/3dc3c39fce.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,7 +16,9 @@
   </head>
   <body>
 
-    <%if user_signed_in? %>
+    <%if user_signed_in? && current_user.admin%>
+    <%= render "layouts/admin_navbar" %>
+    <% elsif user_signed_in? %>
     <%= render "layouts/authenticated_navbar" %>
     <% else %>
     <%= render "layouts/unauthenticated_navbar" %>

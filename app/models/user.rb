@@ -1,8 +1,11 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  
+
   # after_commit :send_welcome_email
+  def active_for_authentication?
+    super and self.active?
+  end
 
   def send_welcome_email
     MailerJob.perform_now self
@@ -11,7 +14,7 @@ class User < ApplicationRecord
   mount_uploader :avatar, ImageUploader
 
   devise :database_authenticatable, :registerable,
-           :recoverable, :rememberable, :validatable, :confirmable
+           :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
     has_many :photos, dependent: :destroy
     has_many :albums, dependent: :destroy
@@ -33,5 +36,6 @@ class User < ApplicationRecord
     validates :email, uniqueness: true, presence: true, email: true, length: {maximum: 255}, case_sensitive: false
 
     scope :follow?, ->(user, post) { user.followees.find_by(id: post.user_id) }
+    scope :normal_user, -> {where(admin:false)}
 
 end
