@@ -21,8 +21,23 @@ class Admin::PhotosController < ApplicationController
   end
 
   def destroy
-    Photo.find(get_photo).destroy
-    redirect_to admin_photos_path
+    photo = Photo.find(get_photo)
+    album_id = photo.album_id
+    if photo.destroy
+      flash[:success] = "Successfully deleted photo!"
+      if album_id
+        redirect_to edit_admin_album_path(album_id)
+      else
+        redirect_to admin_photos_path
+      end
+    else
+      flash[:danger] = photo.errors.full_messages[0]
+      if album_id
+        redirect_to edit_admin_album_path(album_id)
+      else
+        redirect_to edit_admin_photo_path(photo.id)
+      end
+    end
   end
 
   protected
