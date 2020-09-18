@@ -28,12 +28,12 @@
 
               <% if photos = album.photos.order(created_at: :desc) %>
               <% if photos[2] %>
-              <%= image_tag photos[2].image_url, {class:"rotate10 rounded ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <%= image_tag photos[2].image_url, {class:"rotate10 rounded ",'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description, onclick:"modal_album(#{album.id})"}%>
               <% end %>
               <% if photos[1] %>
-              <%= image_tag photos[1].image_url, {class:"rotate5 rounded ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <%= image_tag photos[1].image_url, {class:"rotate5 rounded ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description, onclick:"modal_album(#{album.id})"}%>
               <% end %>
-              <%= image_tag photos[0].image_url, {class:"norotate rounded ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+              <%= image_tag photos[0].image_url, {class:"norotate rounded ",'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description, onclick:"modal_album(#{album.id})"}%>
               <% end %>
             </div>
             <div class="col-lg-6 p-2 col-sm-12 col-md-12 page d-block box-shadow position-relative border-left-0">

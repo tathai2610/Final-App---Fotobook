@@ -104,12 +104,12 @@
               <div class="col-lg-3 col-md-3 col-sm-6 p-3 text-center" >
                 <% if photos = album.photos.order(created_at: :desc) %>
                 <% if photos[2] %>
-                <%= image_tag photos[2].image_url, {class:"rotate10 rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+                <%= image_tag photos[2].image_url, {class:"rotate10 rounded ",'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description, onclick:"modal_album(#{album.id})"}%>
                 <% end %>
                 <% if photos[1] %>
-                <%= image_tag photos[1].image_url, {class:"rotate5 rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+                <%= image_tag photos[1].image_url, {class:"rotate5 rounded ", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description, onclick:"modal_album(#{album.id})"}%>
                 <% end %>
-                <%= image_tag photos[0].image_url, {class:"norotate rounded div200px", 'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description}%>
+                <%= image_tag photos[0].image_url, {class:"norotate rounded ",'data-toggle':"modal", 'data-target':"#modal-album", title:album.title, desc:album.description, onclick:"modal_album(#{album.id})"}%>
                 <% end %>
 
                 <%if @user_own_profile %>
