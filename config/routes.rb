@@ -30,4 +30,6 @@ Rails.application.routes.draw do
     resources :users, except: [:new, :create, :show]
   end
 
+   get 'get_album', to: "users#get_album"
+
 end

@@ -41,6 +41,16 @@ class UsersController < ApplicationController
       render 'like.js.erb'
     end
 
+    def get_album
+      photos = Album.find(params[:content_id]).photos
+      html = String.new
+      html += '<div class="carousel-item active"><img src="'+ photos.last.image.url + '" class="d-block w-100"></div>'
+      photos[..-2].reverse_each do |p|
+        html += '<div class="carousel-item "><img src="'+ p.image.url + '" class="d-block w-100"></div>'
+      end
+      render :js => html
+    end
+
     private
       def user_detail
         params.require(:user).permit(:firstname, :lastname, :email)

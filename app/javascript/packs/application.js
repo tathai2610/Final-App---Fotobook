@@ -16,98 +16,98 @@ require('jquery')
 // const imagePath = (name) => images(name, true)
 
 $(document).ready(function(){
-    $("#signup-form").validate({
-        rules: {
-            'user[firstname]': {
-                required: true,
-                maxlength: 25
-            },
-            'user[lastname]': {
-                required: true,
-                maxlength: 25
-            },
-            'user[email]': {
-              required: true,
-              maxlength: 255
-            },
-            'user[password]': {
-              required: true,
-              maxlength: 64,
-              minlength: 6
-            },
-            'user[password_confirmation]': {
-              required: true,
-              maxlength: 64,
-              equalTo: "#user_password"
-            }
-        },
-        messages: {
-            'user[firstname]': {
-                required: "Please enter your first name",
-                maxlength: "Your first name should be at most 25 characters"
-            },
-            'user[lastname]': {
-                required: "Please enter your last name",
-                maxlength: "Your last name should be at most 25 characters"
-            },
-            'user[email]': {
-              required: "Please enter your email",
-              maxlength: "Your email should be at most 255 characters"
-            },
-            'user[password]': {
-                required: "Please enter a password",
-                maxlength: "Your password must be at most 64 characters",
-                minlength: "Your password must be at least 6 characters"
-            },
-            'user[password_confirmation]': {
-                required: "Please enter a password",
-                maxlength: "Your password must be at most 64 characters",
-                equalTo: "Please enter the same password as above"
-            }
-        }
-    });
-    $("#signin-form").validate({
-        rules: {
-          'user[email]': {
-            required: true,
-            maxlength: 255
-          },
-          'user[password]': {
-            required: true,
-            maxlength: 64
-          }
+  $("#signup-form").validate({
+    rules: {
+      'user[firstname]': {
+        required: true,
+        maxlength: 25
       },
-      messages: {
-        'user[email]': {
-          required: "Please enter you email",
-          maxlength: "Your email should be at most 255 characters"
-        },
-        'user[password]': {
-            required: "Please provide a password",
-            maxlength: "Your password should be at most 64 characters"
-          }
+      'user[lastname]': {
+        required: true,
+        maxlength: 25
+      },
+      'user[email]': {
+        required: true,
+        maxlength: 255
+      },
+      'user[password]': {
+        required: true,
+        maxlength: 64,
+        minlength: 6
+      },
+      'user[password_confirmation]': {
+        required: true,
+        maxlength: 64,
+        equalTo: "#user_password"
       }
+    },
+    messages: {
+      'user[firstname]': {
+        required: "Please enter your first name",
+        maxlength: "Your first name should be at most 25 characters"
+      },
+      'user[lastname]': {
+        required: "Please enter your last name",
+        maxlength: "Your last name should be at most 25 characters"
+      },
+      'user[email]': {
+        required: "Please enter your email",
+        maxlength: "Your email should be at most 255 characters"
+      },
+      'user[password]': {
+        required: "Please enter a password",
+        maxlength: "Your password must be at most 64 characters",
+        minlength: "Your password must be at least 6 characters"
+      },
+      'user[password_confirmation]': {
+        required: "Please enter a password",
+        maxlength: "Your password must be at most 64 characters",
+        equalTo: "Please enter the same password as above"
+      }
+    }
+  });
+  $("#signin-form").validate({
+    rules: {
+      'user[email]': {
+        required: true,
+        maxlength: 255
+      },
+      'user[password]': {
+        required: true,
+        maxlength: 64
+      }
+    },
+    messages: {
+      'user[email]': {
+        required: "Please enter you email",
+        maxlength: "Your email should be at most 255 characters"
+      },
+      'user[password]': {
+        required: "Please provide a password",
+        maxlength: "Your password should be at most 64 characters"
+      }
+    }
   });
   $("img[title]").on({
-      "click": function() {
-          if ($("#photo-option").hasClass("avatar") || $("#photo-tab").hasClass("active")) {
-            var title = $(this).attr("title");
-            var source = $(this).attr("src");
-            var description = $(this).attr("desc");
+    "click": function() {
+      if ($("#photo-option").hasClass("avatar") || $("#photo-tab").hasClass("active")) {
+        var title = $(this).attr("title");
+        var source = $(this).attr("src");
+        var description = $(this).attr("desc");
 
-            $("#modal-photo-body").attr("src", source);
-            document.getElementById("modal-photo-title").innerHTML = title
-            document.getElementById("modal-photo-description").innerHTML = description
-          }
-          else {
-            var title = $(this).attr("title");
-            var description = $(this).attr("desc");
-
-            document.getElementById("modal-album-title").innerHTML = title
-            document.getElementById("modal-album-description").innerHTML = description
-          }
-
+        $("#modal-photo-body").attr("src", source);
+        document.getElementById("modal-photo-title").innerHTML = title
+        document.getElementById("modal-photo-description").innerHTML = description
       }
+      else {
+        var title = $(this).attr("title");
+        var description = $(this).attr("desc");
+
+        document.getElementById("modal-album-title").innerHTML = title
+        document.getElementById("modal-album-description").innerHTML = description
+      }
+
+    }
   });
   $("#new-photo-form").validate({
     rules: {
@@ -176,41 +176,42 @@ $(document).ready(function(){
     }
   });
   $("[name='follow']").on({
-      "click": function() {
-          if ($(this).hasClass("follow")) {
-            $(this).removeClass('follow');
-            $(this).addClass('followed');
-            $(this).html("following");
-            // if ($("#following-tab")) {
-            //   var count-following = document.getElementById("following-tab");
-            //   count-following.text(parseInt(count-following.text())+1);
-            // }
-          }
-          else {
-            $(this).removeClass('followed');
-            $(this).addClass('follow');
-            $(this).html("follow");
-            // if ($("#following-tab")) {
+    "click": function() {
+      if ($(this).hasClass("follow")) {
+        $(this).removeClass('follow');
+        $(this).addClass('followed');
+        $(this).html("following");
+        // if ($("#following-tab")) {
+          //   var count-following = document.getElementById("following-tab");
+          //   count-following.text(parseInt(count-following.text())+1);
+          // }
+        }
+        else {
+          $(this).removeClass('followed');
+          $(this).addClass('follow');
+          $(this).html("follow");
+          // if ($("#following-tab")) {
             //   var count-following = document.getElementById("following-tab");
             //   count-following.text(parseInt(count-following.text())-1);
             // }
           }
         }
-    });
-  $("a[name='like']").on({
-    "click": function() {
-      var count = $(this).next();
+      });
+      $("a[name='like']").on({
+        "click": function() {
+          var count = $(this).next();
 
-      if ($(this).children().hasClass("text-color")) {
-        $(this).children().removeClass("text-color");
-        $(this).children().addClass("text-gray");
-        count.text(parseInt(count.text())-1);
-      }
-      else {
-        $(this).children().removeClass("text-gray");
-        $(this).children().addClass("text-color");
-        count.text(parseInt(count.text())+1);
-      }
-    }
-  })
-});
+          if ($(this).children().hasClass("text-color")) {
+            $(this).children().removeClass("text-color");
+            $(this).children().addClass("text-gray");
+            count.text(parseInt(count.text())-1);
+          }
+          else {
+            $(this).children().removeClass("text-gray");
+            $(this).children().addClass("text-color");
+            count.text(parseInt(count.text())+1);
+          }
+        }
+      })
+    });
+    
